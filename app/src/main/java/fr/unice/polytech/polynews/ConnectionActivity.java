@@ -20,23 +20,11 @@ import fr.unice.polytech.polynews.fragments.ConnectionFragment;
 import fr.unice.polytech.polynews.fragments.NewsGridFragment;
 import fr.unice.polytech.polynews.fragments.PlaceholderFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class ConnectionActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
-    private boolean isConnected = false;
+    private boolean isConnected = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

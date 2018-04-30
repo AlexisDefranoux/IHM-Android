@@ -20,11 +20,10 @@ import fr.unice.polytech.polynews.fragments.ConnectionFragment;
 import fr.unice.polytech.polynews.fragments.NewsGridFragment;
 import fr.unice.polytech.polynews.fragments.PlaceholderFragment;
 
-public class ConnectionActivity extends AppCompatActivity {
+public class ViewAndAddActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private boolean isConnected = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,23 +97,18 @@ public class ConnectionActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             //return PlaceholderFragment.newInstance(position + 1);
-            if (isConnected) {
-                if (position == 0)
-                    return NewsGridFragment.newInstance(position + 1);
-                return PlaceholderFragment.newInstance(position + 1);
-            }
-            return ConnectionFragment.newInstance();
+            if (position == 0)
+                return NewsGridFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            if(isConnected) return 2;
-            return 1;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (!isConnected) return pageTitles[2];
             if (position > pageTitles.length - 1)
                 throw new IllegalArgumentException("<ommitted>");
             return pageTitles[position];

@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import fr.unice.polytech.polynews.ConnectionActivity;
-import fr.unice.polytech.polynews.MainActivity;
+import fr.unice.polytech.polynews.ViewAndAddActivity;
 import fr.unice.polytech.polynews.R;
 
 /**
@@ -54,6 +53,6 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this.getContext(), ConnectionActivity.class));
+        startActivity(new Intent(this.getContext(), ViewAndAddActivity.class));
     }
 }

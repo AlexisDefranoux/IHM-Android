@@ -86,7 +86,7 @@ public class ViewAndAddActivity extends AppCompatActivity {
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         @NonNull
-        private final String[] pageTitles = {"My news", "Add a news", "Connection"};
+        private final String[] pageTitles = {"My mishaps", "Add a mishap"};
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);

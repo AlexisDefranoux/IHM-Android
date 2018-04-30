@@ -97,9 +97,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        @NonNull
-        private final String[] pageTitles = {"My mishaps", "Add a mishap", "Connection"};
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -119,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return pageTitles[2];
+            return "Connection";
         }
     }
 }

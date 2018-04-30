@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import fr.unice.polytech.polynews.ViewAndAddActivity;
@@ -55,11 +56,22 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
         TextView textMDP = (TextView) rootView.findViewById(R.id.textMDP);
         textMDP.setText("Password");
 
+
+
+
         return rootView;
     }
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this.getContext(), ViewAndAddActivity.class));
+
+        EditText editID = (EditText)rootView.findViewById(R.id.editID);
+        String ID = editID.getText().toString();
+        EditText editMDP = (EditText)rootView.findViewById(R.id.editMDP);
+        String MDP = editMDP.getText().toString();
+
+        if (ID.equals("id") && MDP.equals("mdp")) {
+            startActivity(new Intent(this.getContext(), ViewAndAddActivity.class));
+        }
     }
 }

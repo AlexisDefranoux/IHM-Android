@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import fr.unice.polytech.polynews.ViewAndAddActivity;
 import fr.unice.polytech.polynews.R;
@@ -46,8 +47,14 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.connection, container, false);
-        btnClickMe = (Button) rootView.findViewById(R.id.button);
+        btnClickMe = (Button) rootView.findViewById(R.id.buttonConnection);
         btnClickMe.setOnClickListener(ConnectionFragment.this);
+
+        TextView textID = (TextView) rootView.findViewById(R.id.textID);
+        textID.setText("Username");
+        TextView textMDP = (TextView) rootView.findViewById(R.id.textMDP);
+        textMDP.setText("Password");
+
         return rootView;
     }
 

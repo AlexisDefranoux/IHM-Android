@@ -11,17 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/section_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-            android:textSize="20sp"
-            android:textColor="#cc0101"
-            android:gravity="center"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -116,8 +105,9 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:labelFor="@+id/textSomethingElse"
                 android:text=""
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/editAnotherThing"
@@ -141,25 +131,23 @@
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
         <EditText
-            android:id="@+id/editDescription"
+            android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_height="200dp"
+            android:layout_gravity="top"
             android:ems="10"
+            android:gravity="top"
             android:inputType="textMultiLine"
-            android:text=""
-            android:textSize="15sp"/>
+            android:labelFor="@+id/textDescription" />
 
 
         <Button
             android:id="@+id/buttonContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Add" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
+            android:text="@string/add" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
 

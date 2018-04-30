@@ -42,13 +42,13 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+//        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         TextView textTitle = (TextView) rootView.findViewById(R.id.textTitle);
         TextView textDescription = (TextView) rootView.findViewById(R.id.textDescription);
         TextView textSomething = (TextView) rootView.findViewById(R.id.textSomething);
         TextView textSomethingElse = (TextView) rootView.findViewById(R.id.textSomethingElse);
         TextView textAnotherThing = (TextView) rootView.findViewById(R.id.textAnotherThing);
-        textView.setText("Add your mishap");
+//        textView.setText("Add your mishap");
         textTitle.setText("Title : ");
         textDescription.setText("Description : ");
         textSomething.setText("Something : ");

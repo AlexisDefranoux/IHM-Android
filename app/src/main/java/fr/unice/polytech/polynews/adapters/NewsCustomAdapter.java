@@ -65,6 +65,8 @@ public class NewsCustomAdapter extends ArrayAdapter<Article> {
         TextView cat = convertView.findViewById(R.id.cat);
         cat.setText(article.getCategorie());
 
+        convertView.findViewById(R.id.tablelayout).setTag(position);
+
         return convertView;
     }
 }

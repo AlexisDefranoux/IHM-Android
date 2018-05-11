@@ -41,13 +41,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        NewsDBHelper bdd = new NewsDBHelper(getApplicationContext());
-        try {
-            bdd.createDataBase();
-        }
-        catch (IOException e){
-            Log.i("main activity ", "error" + e);
-        }
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

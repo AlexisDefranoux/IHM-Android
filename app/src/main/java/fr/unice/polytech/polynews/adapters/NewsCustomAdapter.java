@@ -16,16 +16,16 @@ import java.util.List;
 
 import fr.unice.polytech.polynews.R;
 import fr.unice.polytech.polynews.asyncTasks.LoadImages;
-import fr.unice.polytech.polynews.models.Article;
+import fr.unice.polytech.polynews.models.Mishap;
 
 /**
  * Created by Alex on 26/03/2018.
  */
 
-public class NewsCustomAdapter extends ArrayAdapter<Article> {
+public class NewsCustomAdapter extends ArrayAdapter<Mishap> {
 
-    public NewsCustomAdapter(Context context, List<Article> articles) {
-        super(context, 0, articles);
+    public NewsCustomAdapter(Context context, List<Mishap> mishaps) {
+        super(context, 0, mishaps);
     }
 
     @NonNull
@@ -37,7 +37,7 @@ public class NewsCustomAdapter extends ArrayAdapter<Article> {
         if(convertView == null)
             convertView = inflater.inflate(R.layout.element, null);
 
-        Article article = getItem(position);
+        Mishap mishap = getItem(position);
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
         Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.placeholder);
@@ -45,25 +45,15 @@ public class NewsCustomAdapter extends ArrayAdapter<Article> {
         LoadImages loadImages = new LoadImages(imageView);
         ImageView play = convertView.findViewById(R.id.play);
 
-        if(article.getType() == "photo"){
-            loadImages.execute(article.getUrl());
-        }else if (article.getType() == "vidéo"){
-            play.setVisibility(ImageView.VISIBLE);
-            String urlVideo = article.getUrl();
-            int db = urlVideo.indexOf("=");
-            String idVideo = urlVideo.substring(db+1);
-            loadImages.execute("https://img.youtube.com/vi/"+idVideo+"/default.jpg");
-        }
-
 
         TextView titre = convertView.findViewById(R.id.titre);
-        titre.setText(article.getTitre());
+        titre.setText(mishap.getTitleMishap());
 
         TextView date = convertView.findViewById(R.id.date);
-        date.setText(article.getDate().toString());
+        date.setText(mishap.getDate().toString());
 
         TextView cat = convertView.findViewById(R.id.cat);
-        cat.setText(article.getCategorie());
+        cat.setText(mishap.getCategory());
 
         convertView.findViewById(R.id.tablelayout).setTag(position);
 

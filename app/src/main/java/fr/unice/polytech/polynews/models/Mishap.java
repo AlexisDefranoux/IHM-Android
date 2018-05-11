@@ -10,20 +10,20 @@ public class Mishap {
     private String titleMishap;
     private String category;
     private String description;
-    private String location;
-    private String locationDetails;
+    private double latitude;
+    private double longitude;
     private String urgency;
     private String email;
     private String date;
 
-    public Mishap(int idMishap, String titleMishap, String category, String description, String location,
-                  String locationDetails, String urgency, String email, String date) {
+    public Mishap(int idMishap, String titleMishap, String category, String description, double latitude,
+                  double longitude, String urgency, String email, String date) {
         this.idMishap = idMishap;
         this.titleMishap = titleMishap;
         this.category = category;
         this.description = description;
-        this.location = location;
-        this.locationDetails = locationDetails;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.urgency = urgency;
         this.email = email;
         this.date = date;
@@ -45,12 +45,12 @@ public class Mishap {
         return description;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public String getLocationDetails() {
-        return locationDetails;
+    public double getLongitude() {
+        return longitude;
     }
 
     public String getUrgency() {

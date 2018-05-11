@@ -38,11 +38,11 @@ public class Database extends SQLiteOpenHelper {
             Mishap_DATE + " TEXT)";
 
     private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, location, locationdetails, urgency, email, dateMishap) " +
-            "VALUES ('Mishap1', 'Casse', null,'Bat O', '355', 'Faible', 'marion@etu.fr', '16/05/18');";
+            "VALUES ('Mishap1', 'Casse', 'Ceci est une description','Bat O', '355', 'Faible', 'marion@etu.fr', '16/05/18');";
     private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, location,locationdetails, urgency, email, dateMishap)" +
-            "VALUES ('Mishap2', 'Propreté', null,'Bat E', '235', 'Forte', 'florian@etu.fr', '10/05/18');";
+            "VALUES ('Mishap2', 'Propreté', 'Ceci est une description','Bat E', '235', 'Forte', 'florian@etu.fr', '10/05/18');";
     private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, location,locationdetails, urgency, email, dateMishap)" +
-            "VALUES ('Mishap3', 'Autre', null, 'Bat W', '235', 'Moyen', 'quentin@etu.fr', '14/05/18');";
+            "VALUES ('Mishap3', 'Autre', 'Ceci est une description', 'Bat W', '235', 'Moyen', 'quentin@etu.fr', '14/05/18');";
 
 
     private static final String PHOTO_TABLE_NAME = "photos";

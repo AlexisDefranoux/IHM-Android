@@ -1,22 +1,15 @@
 package fr.unice.polytech.polynews.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import java.io.IOException;
-import java.sql.SQLException;
 
 
 import fr.unice.polytech.polynews.Database;
-import fr.unice.polytech.polynews.ViewAndAddActivity;
 import fr.unice.polytech.polynews.adapters.NewsCustomAdapter;
 import fr.unice.polytech.polynews.R;
 

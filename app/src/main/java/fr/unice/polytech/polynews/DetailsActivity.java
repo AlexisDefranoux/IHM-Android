@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.MapView;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -40,11 +42,20 @@ public class DetailsActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.date);
         date.setText(mishap.getDate());
 
+        TextView autor = findViewById(R.id.autor);
+        autor.setText(mishap.getEmail());
+
+        TextView ur = findViewById(R.id.urgency);
+        ur.setText(mishap.getUrgency());
+
         TextView cat = findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
 
         TextView desc = findViewById(R.id.description);
         desc.setText(mishap.getDescription());
+
+        MapView mapView = findViewById(R.id.mapView);
+
     }
 
 }

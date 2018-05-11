@@ -12,14 +12,63 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/titre"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="192dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/titre"
+                android:text="Date : "
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="192dp"
+                tools:layout_editor_absoluteY="2dp" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Category : "
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/cat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 tools:layout_editor_absoluteX="192dp"
                 tools:layout_editor_absoluteY="2dp" />
 
@@ -27,24 +76,52 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
+                android:id="@+id/textView6"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/date"
+                android:text="By : "
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/autor"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
                 tools:layout_editor_absoluteX="192dp"
                 tools:layout_editor_absoluteY="2dp" />
 
             <TextView
-                android:id="@+id/cat"
+                android:id="@+id/textView7"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Urgency : "
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/urgency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/cat"
                 tools:layout_editor_absoluteX="192dp"
                 tools:layout_editor_absoluteY="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,32 +135,17 @@
                 android:layout_height="match_parent"
                 app:srcCompat="?android:attr/actionModeCopyDrawable" />
 
-            <ImageView
-                android:id="@+id/play"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible"
-                app:srcCompat="@android:drawable/ic_media_play" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/google_map" />
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </LinearLayout>

@@ -54,20 +54,17 @@
                 <TextView
                     android:id="@+id/cat"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cat" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/date" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/titre"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/titre" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </TableRow>

@@ -1,7 +1,8 @@
 package fr.unice.polytech.polynews;
 
-import android.support.annotation.NonNull;
+import android.Manifest;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,15 +11,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.IOException;
-
 import fr.unice.polytech.polynews.fragments.ConnectionFragment;
-import fr.unice.polytech.polynews.fragments.NewsGridFragment;
-import fr.unice.polytech.polynews.fragments.PlaceholderFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+
     }
 
     /**
@@ -74,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
+            // Return a AddFragment (defined as a static inner class below).
+            //return AddFragment.newInstance(position + 1);
             return ConnectionFragment.newInstance();
         }
 

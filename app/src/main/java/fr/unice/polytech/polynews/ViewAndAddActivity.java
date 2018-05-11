@@ -11,16 +11,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import java.io.IOException;
-
-import fr.unice.polytech.polynews.fragments.ConnectionFragment;
 import fr.unice.polytech.polynews.fragments.NewsGridFragment;
-import fr.unice.polytech.polynews.fragments.PlaceholderFragment;
+import fr.unice.polytech.polynews.fragments.AddFragment;
 
 public class ViewAndAddActivity extends AppCompatActivity {
 
@@ -73,11 +67,11 @@ public class ViewAndAddActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
+            // Return a AddFragment (defined as a static inner class below).
+            //return AddFragment.newInstance(position + 1);
             if (position == 0)
                 return NewsGridFragment.newInstance(position + 1);
-            return PlaceholderFragment.newInstance(position + 1);
+            return AddFragment.newInstance(position + 1);
         }
 
         @Override

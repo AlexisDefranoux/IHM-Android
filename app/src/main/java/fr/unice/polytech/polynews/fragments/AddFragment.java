@@ -107,30 +107,18 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     @Override
     public void onConnected(Bundle bundle) {
-        TextView location = (TextView) rootView.findViewById(R.id.location);
-        location.setText("Can't find location");
+        TextView textLocation = (TextView) rootView.findViewById(R.id.location);
+        textLocation.setText("Can't find location");
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return; //Not enough permissions
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLocation == null) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                    mLocationRequest, this);
-        }
-        for (int i = 0; i<10 && mLocation == null; ++i) {
-            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            try {
-                TimeUnit.SECONDS.sleep((long) 0.5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         if (mLocation != null) {
-            latitude = mLocation.getLatitude();
-            longitude = mLocation.getLongitude();
-            location.setText("Your location is latitude " + latitude + " and longitude " + longitude);
+            textLocation.setText("Your last location is latitude " + latitude + " and longitude " + longitude);
         }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                mLocationRequest, this);
     }
 
     @Override
@@ -178,6 +166,12 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     @Override
     public void onLocationChanged(Location location) {
-        mLocation = location;
+        if (location != null) {
+            TextView textLocation = (TextView) rootView.findViewById(R.id.location);
+            mLocation = location;
+            latitude = mLocation.getLatitude();
+            longitude = mLocation.getLongitude();
+            textLocation.setText("Your location is latitude " + latitude + " and longitude " + longitude);
+        }
     }
 }

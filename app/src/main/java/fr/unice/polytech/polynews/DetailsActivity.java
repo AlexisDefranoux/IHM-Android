@@ -48,6 +48,9 @@ public class DetailsActivity extends AppCompatActivity {
         TextView ur = findViewById(R.id.urgency);
         ur.setText(mishap.getUrgency());
 
+        /*TextView phone = findViewById(R.id.phoneNumber);
+        phone.setText(mishap.getPhone());*/
+
         TextView cat = findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
 

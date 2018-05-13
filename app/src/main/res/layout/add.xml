@@ -80,7 +80,7 @@
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
             <TextView
-                android:id="@+id/textAnotherThing"
+                android:id="@+id/textPhoneNb"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -108,7 +108,7 @@
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/editAnotherThing"
+                android:id="@+id/editPhoneNb"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -131,13 +131,23 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="165dp"
             android:layout_gravity="top"
             android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
             android:labelFor="@+id/textDescription" />
 
+
+        <TextView
+            android:id="@+id/textMandatory"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="right"
+            android:textColor="#8f0404"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
         <Button
             android:id="@+id/buttonContinue"

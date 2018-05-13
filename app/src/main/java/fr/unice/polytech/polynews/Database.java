@@ -23,6 +23,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String Mishap_URGENCY = "urgency";
     private static final String Mishap_EMAIL = "email";
     private static final String Mishap_DATE = "dateMishap";
+    //private static final String Mishap_PHONE = "phoneNumber";
 
     private static final String Mishap_TABLE_NAME = "Mishap";
 
@@ -36,6 +37,7 @@ public class Database extends SQLiteOpenHelper {
             Mishap_URGENCY + " TEXT CHECK (urgency IN ('Faible','Moyen','Forte')),"+
             Mishap_EMAIL+" TEXT,"+
             Mishap_DATE + " TEXT)";
+            //Mishap_PHONE+ " INTEGER) ";
 
     private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap) " +
             "VALUES ('Mishap1', 'Casse', 'Ceci est une description','37.4219983', '-122.084', 'Faible', 'marion@etu.fr', '16/05/18');";
@@ -100,8 +102,11 @@ public class Database extends SQLiteOpenHelper {
         String urgency = c.getString(6);
         String email = c.getString(7);
         String date = c.getString(8);
+        //int phone = c.getInt(9);
+
+
         return new Mishap(idMishap, titleMishap, category, description, latitude, longitude,
-                urgency, email, date);
+                urgency, email, date/*, phone*/);
     }
 
     public Mishap getMishap(int id){
@@ -136,6 +141,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Mishap_URGENCY, Mishap.getUrgency());
         values.put(Mishap_EMAIL, Mishap.getEmail());
         values.put(Mishap_DATE, Mishap.getDate());
+        //values.put(Mishap_PHONE, Mishap.getPhone());
 
         long id  = db.insert(Mishap_TABLE_NAME, null, values);
         db.close();

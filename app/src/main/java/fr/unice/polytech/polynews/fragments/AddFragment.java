@@ -65,13 +65,15 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         TextView textDescription = (TextView) rootView.findViewById(R.id.textDescription);
         TextView textSomething = (TextView) rootView.findViewById(R.id.textSomething);
         TextView textSomethingElse = (TextView) rootView.findViewById(R.id.textSomethingElse);
-        TextView textAnotherThing = (TextView) rootView.findViewById(R.id.textAnotherThing);
+        TextView textPhoneNb = (TextView) rootView.findViewById(R.id.textPhoneNb);
+        TextView textMandatory = (TextView) rootView.findViewById(R.id.textMandatory);
 //        textView.setText("Add your mishap");
-        textTitle.setText("Title : ");
-        textDescription.setText("Description : ");
+        textTitle.setText("Title * : ");
+        textDescription.setText("Description * : ");
         textSomething.setText("Something : ");
         textSomethingElse.setText("SomethingElse : ");
-        textAnotherThing.setText("AnotherThing : ");
+        textPhoneNb.setText("Phone number : ");
+        textMandatory.setText("* Mandatory");
 
         Button btnClickMe = (Button) rootView.findViewById(R.id.buttonContinue);
         btnClickMe.setOnClickListener(AddFragment.this);
@@ -95,7 +97,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         String something = editSomething.getText().toString();
         EditText editTitle = (EditText) rootView.findViewById(R.id.editTitle);
         String title = editTitle.getText().toString();
-        EditText editAnotherThing = (EditText) rootView.findViewById(R.id.editAnotherThing);
+        EditText editAnotherThing = (EditText) rootView.findViewById(R.id.editPhoneNb);
         String anotherThing = editAnotherThing.getText().toString();
         EditText editSomethingElse = (EditText) rootView.findViewById(R.id.editSomethingElse);
         String somethingElse = editSomethingElse.getText().toString();

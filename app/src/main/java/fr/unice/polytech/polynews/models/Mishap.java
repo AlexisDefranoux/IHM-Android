@@ -17,9 +17,10 @@ public class Mishap {
     private String state;
     private String date;
     private String phone;
+    private String place;
 
     public Mishap(int idMishap, String titleMishap, String category, String description, double latitude,
-                  double longitude, String urgency, String email, String state, String date, String phone) {
+                  double longitude, String urgency, String email, String state, String date, String phone, String place) {
         this.idMishap = idMishap;
         this.titleMishap = titleMishap;
         this.category = category;
@@ -31,6 +32,7 @@ public class Mishap {
         this.state = state;
         this.date = date;
         this.phone = phone;
+        this.place = place;
     }
 
     public int getIdMishap() {
@@ -73,5 +75,9 @@ public class Mishap {
 
     public String getState() {
         return state;
+    }
+
+    public String getPlace() {
+        return place;
     }
 }

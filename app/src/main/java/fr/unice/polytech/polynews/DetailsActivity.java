@@ -46,12 +46,17 @@ public class DetailsActivity extends AppCompatActivity {
         TextView ur = findViewById(R.id.urgency);
         ur.setText(mishap.getUrgency());
 
-
         TextView cat = findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
 
         TextView desc = findViewById(R.id.description);
         desc.setText(mishap.getDescription());
+
+        TextView place = findViewById(R.id.place);
+        place.setText(mishap.getPlace());
+
+        TextView state = findViewById(R.id.state);
+        state.setText(mishap.getState());
 
         LinearLayout phoneZone = findViewById(R.id.phoneZone);
 

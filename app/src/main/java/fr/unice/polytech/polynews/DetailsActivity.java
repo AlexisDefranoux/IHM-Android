@@ -39,8 +39,8 @@ public class DetailsActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.date);
         date.setText(mishap.getDate());
 
-        /*TextView autor = findViewById(R.id.autor);
-        autor.setText(mishap.getEmail());*/
+        TextView autor = findViewById(R.id.autor);
+        autor.setText(mishap.getEmail());
 
         TextView ur = findViewById(R.id.urgency);
         ur.setText(mishap.getUrgency());
@@ -52,20 +52,35 @@ public class DetailsActivity extends AppCompatActivity {
         TextView desc = findViewById(R.id.description);
         desc.setText(mishap.getDescription());
 
-        MapView mapView = findViewById(R.id.mapView);
+        //if (mishap.getPhone().isEmpty()) {
+        if (mishap.getPhone().isEmpty()) {
+            TextView phone = findViewById(R.id.phoneNumber);
+            phone.setText("No phone number");
+        } else {
+            TextView phone = findViewById(R.id.phoneNumber);
+            phone.setText(mishap.getPhone());
+        }
 
-        TextView phone = findViewById(R.id.phoneNumber);
-        phone.setText(mishap.getPhone());
+        if (!(mishap.getPhone().isEmpty())){
+            final Button smsButton = findViewById(R.id.smsButton);
+            smsButton.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("MissingPermission")
+                public void onClick(View v) {
+                    String number = mishap.getPhone();
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", number, null)));
+                }
+            });
+            final Button callButton = findViewById(R.id.callButton);
+            callButton.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("MissingPermission")
+                public void onClick(View v) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse(mishap.getPhone()));
+                    startActivity(callIntent);
+                }
+            });
+        }
 
-        final Button callButton = findViewById(R.id.callButton);
-        callButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("MissingPermission")
-            public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(mishap.getPhone()));
-                startActivity(callIntent);
-            }
-        });
 
         final Button smsButton = findViewById(R.id.smsButton);
         smsButton.setOnClickListener(new View.OnClickListener() {
@@ -86,5 +101,6 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             }
         });
+
     }
 }

@@ -13,11 +13,12 @@ public class Mishap {
     private double latitude;
     private double longitude;
     private String urgency;
+    private String email;
     private String date;
     private String phone;
 
     public Mishap(int idMishap, String titleMishap, String category, String description, double latitude,
-                  double longitude, String urgency, String date, String phone) {
+                  double longitude, String urgency, String email, String date, String phone) {
         this.idMishap = idMishap;
         this.titleMishap = titleMishap;
         this.category = category;
@@ -25,6 +26,7 @@ public class Mishap {
         this.latitude = latitude;
         this.longitude = longitude;
         this.urgency = urgency;
+        this.email = email;
         this.date = date;
         this.phone = phone;
     }
@@ -62,4 +64,8 @@ public class Mishap {
     }
 
     public String getPhone() { return phone; }
+
+    public String getEmail() {
+        return email;
+    }
 }

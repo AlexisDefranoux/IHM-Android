@@ -128,7 +128,7 @@
 
         <TextView
             android:id="@+id/phoneNumber"
-            android:layout_width="100dp"
+            android:layout_width="134dp"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="192dp"
             tools:layout_editor_absoluteY="2dp" />

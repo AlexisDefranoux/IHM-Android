@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +25,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import java.io.InputStream;
 
 import fr.unice.polytech.polynews.R;
 
@@ -99,9 +102,22 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && data.getExtras() != null) {
+
+        boolean cameraViewUp = false;
+
+        if (data == null) return;
+        try {
+            InputStream imageStream = getContext().getContentResolver().openInputStream(data.getData());
+            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            cameraView.setImageBitmap(selectedImage);
+            cameraViewUp = true;
+        } catch (Exception ignored) {
+        }
+        if (!cameraViewUp && data.getExtras() != null) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             cameraView.setImageBitmap(bitmap);
+            cameraView.setBackgroundColor(0);
+            cameraViewUp = true;
         }
     }
 
@@ -134,8 +150,14 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     private void onClickCamera(View view) {
         cameraView = rootView.findViewById(R.id.imageView);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 0);
+        Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intentGalery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent chooser = new Intent(Intent.createChooser(intentGalery, "Open with"));
+        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intentTakePhoto});
+        startActivityForResult(chooser,0);
+
+        //startActivityForResult(intentTakePhoto, 0);
+        //startActivityForResult(intentGalery, 1);
     }
 
     @Override

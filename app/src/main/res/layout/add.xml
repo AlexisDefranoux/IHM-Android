@@ -131,7 +131,7 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="50dp"
             android:layout_gravity="top"
             android:ems="10"
             android:gravity="top"

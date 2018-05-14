@@ -21,9 +21,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String Mishap_LATITUDE = "latitude";
     private static final String Mishap_LONGITUDE = "longitude";
     private static final String Mishap_URGENCY = "urgency";
-    private static final String Mishap_EMAIL = "email";
     private static final String Mishap_DATE = "dateMishap";
-    //private static final String Mishap_PHONE = "phoneNumber";
+    private static final String Mishap_PHONE = "phone";
 
     private static final String Mishap_TABLE_NAME = "Mishap";
 
@@ -35,16 +34,15 @@ public class Database extends SQLiteOpenHelper {
             Mishap_LATITUDE + " DECIMAL(3,10),"+
             Mishap_LONGITUDE +" DECIMAL(3,10),"+
             Mishap_URGENCY + " TEXT CHECK (urgency IN ('Faible','Moyen','Forte')),"+
-            Mishap_EMAIL+" TEXT,"+
-            Mishap_DATE + " TEXT)";
-            //Mishap_PHONE+ " INTEGER) ";
+            Mishap_DATE +" TEXT,"+
+            Mishap_PHONE+" TEXT) ";
 
-    private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap) " +
-            "VALUES ('Mishap1', 'Casse', 'Ceci est une description','37.4219983', '-122.084', 'Faible', 'marion@etu.fr', '16/05/18');";
-    private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap)" +
-            "VALUES ('Mishap2', 'Propreté', 'Ceci est une description','50.002', '140.5', 'Forte', 'florian@etu.fr', '10/05/18');";
-    private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap)" +
-            "VALUES ('Mishap3', 'Autre', 'Ceci est une description', '37.4219983', '-122', 'Moyen', 'quentin@etu.fr', '14/05/18');";
+    private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, dateMishap, phone) " +
+            "VALUES ('Mishap1', 'Casse', 'Ceci est une description','37.4219983', '-122.084', 'Faible', '16/05/18', '0651010101');";
+    private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, dateMishap, phone)" +
+            "VALUES ('Mishap2', 'Propreté', 'Ceci est une description','50.002', '140.5', 'Forte', '10/05/18', '1651010102');";
+    private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, dateMishap, phone)" +
+            "VALUES ('Mishap3', 'Autre', 'Ceci est une description', '37.4219983', '-122', 'Moyen', '14/05/18', '0651010103');";
 
 
     private static final String PHOTO_TABLE_NAME = "photos";
@@ -71,6 +69,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
+        //onUpgrade(db,0,0); //RESET LA BDD, A MODIF
         db.execSQL(Mishap_CREATE_TABLE);
         db.execSQL(PHOTOS_CREATE_TABLE);
         db.execSQL(Mishap_INSERT);
@@ -100,13 +99,12 @@ public class Database extends SQLiteOpenHelper {
         double latitude = c.getDouble(4);
         double longitude = c.getDouble(5);
         String urgency = c.getString(6);
-        String email = c.getString(7);
-        String date = c.getString(8);
-        //int phone = c.getInt(9);
+        String date = c.getString(7);
+        String phone = c.getString(8);
 
 
         return new Mishap(idMishap, titleMishap, category, description, latitude, longitude,
-                urgency, email, date/*, phone*/);
+                urgency, date, phone);
     }
 
     public Mishap getMishap(int id){
@@ -139,9 +137,8 @@ public class Database extends SQLiteOpenHelper {
         values.put(Mishap_LATITUDE, Mishap.getLatitude());
         values.put(Mishap_LONGITUDE, Mishap.getLongitude());
         values.put(Mishap_URGENCY, Mishap.getUrgency());
-        values.put(Mishap_EMAIL, Mishap.getEmail());
         values.put(Mishap_DATE, Mishap.getDate());
-        //values.put(Mishap_PHONE, Mishap.getPhone());
+        values.put(Mishap_PHONE, Mishap.getPhone());
 
         long id  = db.insert(Mishap_TABLE_NAME, null, values);
         db.close();

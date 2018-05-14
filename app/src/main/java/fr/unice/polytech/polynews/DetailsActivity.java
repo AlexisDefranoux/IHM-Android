@@ -29,7 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_details);
 
-        Mishap mishap = new Database(getApplicationContext()).getMishap(position+1);
+        final Mishap mishap = new Database(getApplicationContext()).getMishap(position+1);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.placeholder);
@@ -43,14 +43,12 @@ public class DetailsActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.date);
         date.setText(mishap.getDate());
 
-        TextView autor = findViewById(R.id.autor);
-        autor.setText(mishap.getEmail());
+        /*TextView autor = findViewById(R.id.autor);
+        autor.setText(mishap.getEmail());*/
 
         TextView ur = findViewById(R.id.urgency);
         ur.setText(mishap.getUrgency());
 
-        /*TextView phone = findViewById(R.id.phoneNumber);
-        phone.setText(mishap.getPhone());*/
 
         TextView cat = findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
@@ -58,12 +56,17 @@ public class DetailsActivity extends AppCompatActivity {
         TextView desc = findViewById(R.id.description);
         desc.setText(mishap.getDescription());
 
+        MapView mapView = findViewById(R.id.mapView);
+
+        TextView phone = findViewById(R.id.phoneNumber);
+        phone.setText(mishap.getPhone());
+
         final Button callButton = findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             public void onClick(View v) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:0123456789"));
+                callIntent.setData(Uri.parse(mishap.getPhone()));
                 startActivity(callIntent);
             }
         });
@@ -73,7 +76,7 @@ public class DetailsActivity extends AppCompatActivity {
         smsButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             public void onClick(View v) {
-                String number = "0123456789";  // The number on which you want to send SMS
+                String number = mishap.getPhone();
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", number, null)));
             }
         });

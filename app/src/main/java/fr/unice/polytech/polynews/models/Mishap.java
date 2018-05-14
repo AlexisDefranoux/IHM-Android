@@ -13,12 +13,11 @@ public class Mishap {
     private double latitude;
     private double longitude;
     private String urgency;
-    private String email;
     private String date;
-    //private int phone;
+    private String phone;
 
     public Mishap(int idMishap, String titleMishap, String category, String description, double latitude,
-                  double longitude, String urgency, String email, String date/*, int phone*/) {
+                  double longitude, String urgency, String date, String phone) {
         this.idMishap = idMishap;
         this.titleMishap = titleMishap;
         this.category = category;
@@ -26,9 +25,8 @@ public class Mishap {
         this.latitude = latitude;
         this.longitude = longitude;
         this.urgency = urgency;
-        this.email = email;
         this.date = date;
-        //this.phone = phone;
+        this.phone = phone;
     }
 
     public int getIdMishap() {
@@ -59,13 +57,9 @@ public class Mishap {
         return urgency;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getDate() {
         return date;
     }
 
-    //public int getPhone() { return phone; }
+    public String getPhone() { return phone; }
 }

@@ -113,6 +113,7 @@
         </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/phoneZone"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginBottom="10dp"

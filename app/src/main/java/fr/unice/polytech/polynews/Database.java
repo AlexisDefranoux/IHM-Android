@@ -22,6 +22,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String Mishap_LONGITUDE = "longitude";
     private static final String Mishap_URGENCY = "urgency";
     private static final String Mishap_EMAIL = "email";
+    private static final String Mishap_STATE = "state";
     private static final String Mishap_DATE = "dateMishap";
     private static final String Mishap_PHONE = "phone";
 
@@ -30,21 +31,22 @@ public class Database extends SQLiteOpenHelper {
     private static final String Mishap_CREATE_TABLE =
             "CREATE TABLE "+ Mishap_TABLE_NAME +" ( "+ Mishap_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"+
             Mishap_TITLE+" TEXT NOT NULL,"+
-            Mishap_CATEGORY + " TEXT CHECK (category IN ('Manque','Casse','Dysfonctionnement', 'Propreté', 'Autre')), "+
+            Mishap_CATEGORY + " TEXT CHECK (category IN ('Manque','Broken','Dysfunction', 'Propreté', 'Other')), "+
             Mishap_DESCRIPTION + " TEXT," +
             Mishap_LATITUDE + " DECIMAL(3,10),"+
             Mishap_LONGITUDE +" DECIMAL(3,10),"+
-            Mishap_URGENCY + " TEXT CHECK (urgency IN ('Faible','Moyen','Forte')),"+
+            Mishap_URGENCY + " TEXT CHECK (urgency IN ('Low','Medium','High')),"+
             Mishap_EMAIL +" TEXT, "+
-            Mishap_DATE +" TEXT,"+
+            Mishap_STATE +" TEXT, "+
+            Mishap_DATE +" TEXT, "+
             Mishap_PHONE+" TEXT) ";
 
-    private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap, phone) " +
-            "VALUES ('Mishap1', 'Casse', 'Ceci est une description','37.4219983', '-122.084', 'Faible', 'marion@etu.unice.fr', '16/05/18', '');";
-    private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap, phone)" +
-            "VALUES ('Mishap2', 'Propreté', 'Ceci est une description','50.002', '140.5', 'Forte', 'mario@etu.unice.fr', '10/05/18', '1651010102');";
-    private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, dateMishap, phone)" +
-            "VALUES ('Mishap3', 'Autre', 'Ceci est une description', '37.4219983', '-122', 'Moyen', 'bowser@unice.fr', '14/05/18', '0651010101');";
+    private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone) " +
+            "VALUES ('A chair is broken', 'Broken', 'A chair is broken in the room 0+123','37.4219983', '-122.084', 'Medium', 'marion@etu.unice.fr', 'Done', '16/05/18', '');";
+    private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone)" +
+            "VALUES ('Defaulting distributor', 'Dysfunction', 'The distributor in the west building has an important problem, contact me for more details','50.002', '140.5', 'High', 'alexis@etu.unice.fr', 'To do', '10/05/18', '1651010102');";
+    private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone)" +
+            "VALUES ('Video projector problem', 'Other', 'The video projector in the room E+355 make some strange noise, I think its a good idea to check it', '37.4219983', '-122', 'Medium', 'ruheureuh@unice.fr', 'Done', '14/05/18', '0651010101');";
 
 
     private static final String PHOTO_TABLE_NAME = "photos";
@@ -102,12 +104,13 @@ public class Database extends SQLiteOpenHelper {
         double longitude = c.getDouble(5);
         String urgency = c.getString(6);
         String email = c.getString(7);
-        String date = c.getString(8);
-        String phone = c.getString(9);
+        String state = c.getString(8);
+        String date = c.getString(9);
+        String phone = c.getString(10);
 
 
         return new Mishap(idMishap, titleMishap, category, description, latitude, longitude,
-                urgency, email, date, phone);
+                urgency, email, state, date, phone);
     }
 
     public Mishap getMishap(int id){
@@ -141,6 +144,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Mishap_LONGITUDE, Mishap.getLongitude());
         values.put(Mishap_URGENCY, Mishap.getUrgency());
         values.put(Mishap_EMAIL, Mishap.getEmail());
+        values.put(Mishap_STATE, Mishap.getState());
         values.put(Mishap_DATE, Mishap.getDate());
         values.put(Mishap_PHONE, Mishap.getPhone());
 

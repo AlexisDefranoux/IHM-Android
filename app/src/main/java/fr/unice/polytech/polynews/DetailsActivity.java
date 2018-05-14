@@ -9,12 +9,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.MapView;
-
 import fr.unice.polytech.polynews.asyncTasks.LoadImages;
 import fr.unice.polytech.polynews.models.Mishap;
 
@@ -71,7 +67,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-
         final Button smsButton = findViewById(R.id.smsButton);
         smsButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
@@ -85,7 +80,10 @@ public class DetailsActivity extends AppCompatActivity {
         gmaps.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("latitude", mishap.getLatitude());
+                intent.putExtra("longitude", mishap.getLongitude());
+                startActivityForResult(intent, 0);
             }
         });
     }

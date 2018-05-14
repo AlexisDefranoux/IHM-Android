@@ -1,10 +1,13 @@
 package fr.unice.polytech.polynews.fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.LocationListener;
@@ -20,8 +24,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
-import java.util.concurrent.TimeUnit;
 
 import fr.unice.polytech.polynews.R;
 
@@ -40,6 +42,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private LocationRequest mLocationRequest;
     private double latitude;
     private double longitude;
+    private ImageView cameraView;
 
     public AddFragment() {
     }
@@ -77,6 +80,8 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
         Button btnClickMe = (Button) rootView.findViewById(R.id.buttonContinue);
         btnClickMe.setOnClickListener(AddFragment.this);
+        Button openCamera = (Button) rootView.findViewById(R.id.buttonCamera);
+        openCamera.setOnClickListener(AddFragment.this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -92,7 +97,29 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && data.getExtras() != null) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            cameraView.setImageBitmap(bitmap);
+        }
+    }
+
+    @Override
     public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.buttonConnection:
+                onClickConnection(view);
+                break;
+
+            case R.id.buttonCamera:
+                onClickCamera(view);
+                break;
+        }
+    }
+
+    private void onClickConnection(View view) {
         EditText editSomething = (EditText) rootView.findViewById(R.id.editSomething);
         String something = editSomething.getText().toString();
         EditText editTitle = (EditText) rootView.findViewById(R.id.editTitle);
@@ -103,6 +130,12 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         String somethingElse = editSomethingElse.getText().toString();
         EditText editDescription = (EditText) rootView.findViewById(R.id.editText);
         String description = editDescription.getText().toString();
+    }
+
+    private void onClickCamera(View view) {
+        cameraView = rootView.findViewById(R.id.imageView);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
     }
 
     @Override

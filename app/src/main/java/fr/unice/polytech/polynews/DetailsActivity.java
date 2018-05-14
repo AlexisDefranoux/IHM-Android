@@ -1,11 +1,15 @@
 package fr.unice.polytech.polynews;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,6 +62,27 @@ public class DetailsActivity extends AppCompatActivity {
         desc.setText(mishap.getDescription());
 
         MapView mapView = findViewById(R.id.mapView);
+
+        final Button callButton = findViewById(R.id.callButton);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:0123456789"));
+                startActivity(callIntent);
+            }
+        });
+
+
+        final Button smsButton = findViewById(R.id.smsButton);
+        smsButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            public void onClick(View v) {
+                String number = "0123456789";  // The number on which you want to send SMS
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", number, null)));
+            }
+        });
+
 
     }
 

@@ -128,18 +128,25 @@
 
         <TextView
             android:id="@+id/phoneNumber"
-            android:layout_width="136dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="0650010101"
             tools:layout_editor_absoluteX="192dp"
             tools:layout_editor_absoluteY="2dp" />
 
         <Button
-            android:id="@+id/callButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/smsButton"
+            android:layout_width="73dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Call" />
+            android:text="SMS" />
+
+        <Button
+            android:id="@+id/callButton"
+            android:layout_width="73dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="CALL" />
 
     </LinearLayout>
 

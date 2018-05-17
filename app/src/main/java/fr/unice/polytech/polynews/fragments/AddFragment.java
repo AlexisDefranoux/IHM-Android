@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -83,8 +84,12 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
         Button btnClickMe = (Button) rootView.findViewById(R.id.buttonContinue);
         btnClickMe.setOnClickListener(AddFragment.this);
-        Button openCamera = (Button) rootView.findViewById(R.id.buttonCamera);
-        openCamera.setOnClickListener(AddFragment.this);
+        ImageButton imageView = (ImageButton) rootView.findViewById(R.id.image1);
+        imageView.setOnClickListener(AddFragment.this);
+        imageView = (ImageButton) rootView.findViewById(R.id.image2);
+        imageView.setOnClickListener(AddFragment.this);
+        imageView = (ImageButton) rootView.findViewById(R.id.image3);
+        imageView.setOnClickListener(AddFragment.this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
@@ -116,7 +121,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         if (!cameraViewUp && data.getExtras() != null) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             cameraView.setImageBitmap(bitmap);
-            cameraView.setBackgroundColor(0);
             cameraViewUp = true;
         }
     }
@@ -129,8 +133,17 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
                 onClickConnection(view);
                 break;
 
-            case R.id.buttonCamera:
-                onClickCamera(view);
+            case R.id.image1:
+                cameraView = rootView.findViewById(R.id.image1);
+                onClickCamera();
+                break;
+            case R.id.image2:
+                cameraView = rootView.findViewById(R.id.image2);
+                onClickCamera();
+                break;
+            case R.id.image3:
+                cameraView = rootView.findViewById(R.id.image3);
+                onClickCamera();
                 break;
         }
     }
@@ -148,8 +161,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         String description = editDescription.getText().toString();
     }
 
-    private void onClickCamera(View view) {
-        cameraView = rootView.findViewById(R.id.imageView);
+    private void onClickCamera() {
         Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Intent intentGalery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent chooser = new Intent(Intent.createChooser(intentGalery, "Open with"));

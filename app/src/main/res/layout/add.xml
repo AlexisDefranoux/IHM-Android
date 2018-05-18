@@ -26,7 +26,7 @@
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
             <TextView
-                android:id="@+id/textSomething"
+                android:id="@+id/textCategory"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -53,7 +53,7 @@
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/editSomething"
+                android:id="@+id/editCategory"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textSomethingElse"
+                android:id="@+id/textPlace"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -97,13 +97,13 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editSomethingElse"
+                android:id="@+id/editPlace"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:labelFor="@+id/textSomethingElse"
+                android:labelFor="@+id/textPlace"
                 android:text=""
                 android:textSize="15sp" />
 
@@ -129,7 +129,7 @@
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editDescription"
             android:layout_width="match_parent"
             android:layout_height="125dp"
             android:layout_gravity="top"
@@ -176,7 +176,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonContinue"
+            android:id="@+id/buttonAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

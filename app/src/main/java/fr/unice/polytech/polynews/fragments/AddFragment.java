@@ -28,8 +28,12 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.io.InputStream;
+import java.util.Date;
 
+import fr.unice.polytech.polynews.Database;
 import fr.unice.polytech.polynews.R;
+import fr.unice.polytech.polynews.models.Mishap;
+import fr.unice.polytech.polynews.models.User;
 
 import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
@@ -47,6 +51,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private double latitude;
     private double longitude;
     private ImageView cameraView;
+    private User user;
 
     public AddFragment() {
     }
@@ -70,20 +75,23 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 //        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         TextView textTitle = (TextView) rootView.findViewById(R.id.textTitle);
         TextView textDescription = (TextView) rootView.findViewById(R.id.textDescription);
-        TextView textSomething = (TextView) rootView.findViewById(R.id.textSomething);
-        TextView textSomethingElse = (TextView) rootView.findViewById(R.id.textSomethingElse);
+        TextView textCategory = (TextView) rootView.findViewById(R.id.textCategory);
+        TextView textPlace = (TextView) rootView.findViewById(R.id.textPlace);
         TextView textPhoneNb = (TextView) rootView.findViewById(R.id.textPhoneNb);
         TextView textMandatory = (TextView) rootView.findViewById(R.id.textMandatory);
 //        textView.setText("Add your mishap");
-        textTitle.setText("Title * : ");
-        textDescription.setText("Description * : ");
-        textSomething.setText("Something : ");
-        textSomethingElse.setText("SomethingElse : ");
-        textPhoneNb.setText("Phone number : ");
-        textMandatory.setText("* Mandatory");
+        textTitle.setText(R.string.add_title);
+        textDescription.setText(R.string.add_description);
+        textCategory.setText(R.string.add_category);
+        textPlace.setText(R.string.add_place);
+        textPhoneNb.setText(R.string.add_phone_number);
+        textMandatory.setText(R.string.add_mandatory);
 
-        Button btnClickMe = (Button) rootView.findViewById(R.id.buttonContinue);
-        btnClickMe.setOnClickListener(AddFragment.this);
+        //TODO user = ...
+        user = new User(0, "test@gmail.com", "bon", "jean", "06", "mdp");
+
+        Button buttonAdd = (Button) rootView.findViewById(R.id.buttonAdd);
+        buttonAdd.setOnClickListener(AddFragment.this);
         ImageButton imageView = (ImageButton) rootView.findViewById(R.id.image1);
         imageView.setOnClickListener(AddFragment.this);
         imageView = (ImageButton) rootView.findViewById(R.id.image2);
@@ -129,8 +137,8 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.buttonConnection:
-                onClickConnection(view);
+            case R.id.buttonAdd:
+                onClickAdd(view);
                 break;
 
             case R.id.image1:
@@ -148,17 +156,28 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         }
     }
 
-    private void onClickConnection(View view) {
-        EditText editSomething = (EditText) rootView.findViewById(R.id.editSomething);
-        String something = editSomething.getText().toString();
+    private void onClickAdd(View view) {
+        EditText editCategory = (EditText) rootView.findViewById(R.id.editCategory);
+        String category = editCategory.getText().toString();
         EditText editTitle = (EditText) rootView.findViewById(R.id.editTitle);
         String title = editTitle.getText().toString();
-        EditText editAnotherThing = (EditText) rootView.findViewById(R.id.editPhoneNb);
-        String anotherThing = editAnotherThing.getText().toString();
-        EditText editSomethingElse = (EditText) rootView.findViewById(R.id.editSomethingElse);
-        String somethingElse = editSomethingElse.getText().toString();
-        EditText editDescription = (EditText) rootView.findViewById(R.id.editText);
+        EditText editPlace = (EditText) rootView.findViewById(R.id.editPlace);
+        String place = editPlace.getText().toString();
+        EditText editDescription = (EditText) rootView.findViewById(R.id.editDescription);
         String description = editDescription.getText().toString();
+        EditText editPhone = (EditText) rootView.findViewById(R.id.editPhoneNb);
+        String phone = editPhone.getText().toString();
+        String state = "TO DO";
+        String email = user.getEmail();
+
+        String urgency = "High";
+        //TODO ajouter radio urgency
+
+        Database database = new Database(getContext());
+        Mishap mishap = new Mishap(0, title, category, description, latitude, longitude, urgency,
+                email, state, new Date().toString(), phone, place);
+
+        database.addMishap(mishap);
     }
 
     private void onClickCamera() {
@@ -175,14 +194,14 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     @Override
     public void onConnected(Bundle bundle) {
         TextView textLocation = (TextView) rootView.findViewById(R.id.location);
-        textLocation.setText("Can't find location");
+        textLocation.setText(R.string.add_location_cantfind);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return; //Not enough permissions
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
-            textLocation.setText("Your last location is latitude " + latitude + " and longitude " + longitude);
+            textLocation.setText(getString(R.string.add_location_last, latitude, longitude));
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                 mLocationRequest, this);
@@ -238,7 +257,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
             mLocation = location;
             latitude = mLocation.getLatitude();
             longitude = mLocation.getLongitude();
-            textLocation.setText("Your location is latitude " + latitude + " and longitude " + longitude);
+            textLocation.setText(getString(R.string.add_location_now, latitude, longitude));
         }
     }
 }

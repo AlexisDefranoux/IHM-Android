@@ -26,7 +26,6 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
      * fragment.
      */
     private View rootView;
-    private Button btnClickMe;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public ConnectionFragment() {
@@ -48,13 +47,13 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.connection, container, false);
-        btnClickMe = (Button) rootView.findViewById(R.id.buttonConnection);
+        Button btnClickMe = rootView.findViewById(R.id.buttonConnection);
         btnClickMe.setOnClickListener(ConnectionFragment.this);
 
-        TextView textID = (TextView) rootView.findViewById(R.id.textID);
-        textID.setText("Username");
-        TextView textMDP = (TextView) rootView.findViewById(R.id.textMDP);
-        textMDP.setText("Password");
+        TextView textID = rootView.findViewById(R.id.textID);
+        textID.setText(R.string.username);
+        TextView textMDP = rootView.findViewById(R.id.textMDP);
+        textMDP.setText(R.string.password);
 
 
 
@@ -65,13 +64,15 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
 
-        EditText editID = (EditText)rootView.findViewById(R.id.editID);
+        EditText editID = rootView.findViewById(R.id.editID);
         String ID = editID.getText().toString();
-        EditText editMDP = (EditText)rootView.findViewById(R.id.editMDP);
+        EditText editMDP = rootView.findViewById(R.id.editMDP);
         String MDP = editMDP.getText().toString();
 
         if (ID.equals("id") && MDP.equals("mdp")) {
-            startActivity(new Intent(this.getContext(), ViewAndAddActivity.class));
+            Intent intent = new Intent(getContext(), ViewAndAddActivity.class);
+            intent.putExtra("email", ID);
+            startActivityForResult(intent, 0);
         }
     }
 }

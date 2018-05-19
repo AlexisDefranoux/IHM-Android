@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,7 +42,6 @@ import fr.unice.polytech.polynews.Database;
 import fr.unice.polytech.polynews.R;
 import fr.unice.polytech.polynews.ViewAndAddActivity;
 import fr.unice.polytech.polynews.models.Mishap;
-import fr.unice.polytech.polynews.models.User;
 
 import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
@@ -57,8 +58,9 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private LocationRequest mLocationRequest;
     private double latitude;
     private double longitude;
+    private boolean putLocation;
     private ImageView cameraView;
-    private User user;
+    static private String email;
     private String urgency;
     private String category;
 
@@ -69,7 +71,8 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static AddFragment newInstance(int sectionNumber) {
+    public static AddFragment newInstance(int sectionNumber, String email) {
+        AddFragment.email = email;
         AddFragment fragment = new AddFragment();
         Bundle args = new Bundle();
         Log.i("PlaceHolder", "message");
@@ -95,10 +98,19 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         textMandatory.setText(R.string.add_mandatory);
 
         Spinner editCategory = rootView.findViewById(R.id.editCategory);
-        String [] categories = new String[] {"Autre", "Manque", "Broken", "Dysfunction", "Propreté"};
+        String [] categories = new String[] {"Autre", "Manque", "Casse", "Dysfonctionnement", "Propreté"};
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories);
         editCategory.setAdapter(dataAdapter);
         editCategory.setOnItemSelectedListener(this);
+
+        final CheckBox addLocation = rootView.findViewById(R.id.addLocation);
+        addLocation.setText(R.string.add_location_checkbox);
+        addLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                putLocation = b;
+            }
+        });
 
         urgency = "Low";
         final RadioButton low = rootView.findViewById(R.id.low);
@@ -126,7 +138,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         });
 
         //TODO user = ...
-        user = new User(0, "test@gmail.com", "bon", "jean", "06", "mdp");
+        //user = new User(0, "test@gmail.com", "bon", "jean", "06", "mdp");
 
         Button buttonAdd = rootView.findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(AddFragment.this);
@@ -212,15 +224,22 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         String description = editDescription.getText().toString();
         EditText editPhone = rootView.findViewById(R.id.editPhoneNb);
         String phone = editPhone.getText().toString();
-        String email = user.getEmail();
+
+        double lati = 0, longi = 0;
+        if (putLocation) {
+            lati = latitude;
+            longi = longitude;
+        }
 
         Database database = new Database(getContext());
-        Mishap mishap = new Mishap(0, title, category, description, latitude, longitude, urgency,
+        Mishap mishap = new Mishap(0, title, category, description, lati, longi, urgency,
                 email, "TO DO", new Date().toString(), phone, place);
 
         long res = database.addMishap(mishap);
         if (res != -1) {
-            startActivity(new Intent(this.getContext(), ViewAndAddActivity.class));
+            Intent intent = new Intent(getContext(), ViewAndAddActivity.class);
+            intent.putExtra("email", email);
+            startActivityForResult(intent, 0);
             getActivity().finish(); //Si on appuie sur la touche retour on revient sur la connexion
         }
 
@@ -247,7 +266,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
-            textLocation.setText(getString(R.string.add_location_last, latitude, longitude));
+            textLocation.setText(getString(R.string.add_location_now, latitude, longitude));
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                 mLocationRequest, this);

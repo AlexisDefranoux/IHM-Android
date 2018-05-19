@@ -18,9 +18,6 @@ import fr.unice.polytech.polynews.fragments.AddFragment;
 
 public class ViewAndAddActivity extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-
     public void SeeDetails(View view) {
         Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
         intent.putExtra("position", view.getTag().toString());
@@ -33,17 +30,17 @@ public class ViewAndAddActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -71,7 +68,7 @@ public class ViewAndAddActivity extends AppCompatActivity {
             //return AddFragment.newInstance(position + 1);
             if (position == 0)
                 return NewsGridFragment.newInstance(position + 1);
-            return AddFragment.newInstance(position + 1);
+            return AddFragment.newInstance(position + 1, getIntent().getStringExtra("email"));
         }
 
         @Override

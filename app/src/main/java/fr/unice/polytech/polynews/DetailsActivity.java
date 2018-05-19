@@ -21,8 +21,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Intent intent = getIntent();
-        int position = Integer.parseInt(intent.getStringExtra("position"));
+        int position = Integer.parseInt(getIntent().getStringExtra("position"));
 
         setContentView(R.layout.activity_details);
 

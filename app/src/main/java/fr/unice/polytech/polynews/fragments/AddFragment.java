@@ -9,16 +9,22 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.location.LocationListener;
@@ -32,13 +38,14 @@ import java.util.Date;
 
 import fr.unice.polytech.polynews.Database;
 import fr.unice.polytech.polynews.R;
+import fr.unice.polytech.polynews.ViewAndAddActivity;
 import fr.unice.polytech.polynews.models.Mishap;
 import fr.unice.polytech.polynews.models.User;
 
 import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 public class AddFragment extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, AdapterView.OnItemSelectedListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -52,6 +59,8 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private double longitude;
     private ImageView cameraView;
     private User user;
+    private String urgency;
+    private String category;
 
     public AddFragment() {
     }
@@ -72,14 +81,12 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.add, container, false);
-//        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        TextView textTitle = (TextView) rootView.findViewById(R.id.textTitle);
-        TextView textDescription = (TextView) rootView.findViewById(R.id.textDescription);
-        TextView textCategory = (TextView) rootView.findViewById(R.id.textCategory);
-        TextView textPlace = (TextView) rootView.findViewById(R.id.textPlace);
-        TextView textPhoneNb = (TextView) rootView.findViewById(R.id.textPhoneNb);
-        TextView textMandatory = (TextView) rootView.findViewById(R.id.textMandatory);
-//        textView.setText("Add your mishap");
+        TextView textTitle = rootView.findViewById(R.id.textTitle);
+        TextView textDescription = rootView.findViewById(R.id.textDescription);
+        TextView textCategory = rootView.findViewById(R.id.textCategory);
+        TextView textPlace = rootView.findViewById(R.id.textPlace);
+        TextView textPhoneNb = rootView.findViewById(R.id.textPhoneNb);
+        TextView textMandatory = rootView.findViewById(R.id.textMandatory);
         textTitle.setText(R.string.add_title);
         textDescription.setText(R.string.add_description);
         textCategory.setText(R.string.add_category);
@@ -87,16 +94,47 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         textPhoneNb.setText(R.string.add_phone_number);
         textMandatory.setText(R.string.add_mandatory);
 
+        Spinner editCategory = rootView.findViewById(R.id.editCategory);
+        String [] categories = new String[] {"Autre", "Manque", "Broken", "Dysfunction", "Propreté"};
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories);
+        editCategory.setAdapter(dataAdapter);
+        editCategory.setOnItemSelectedListener(this);
+
+        urgency = "Low";
+        final RadioButton low = rootView.findViewById(R.id.low);
+        RadioButton medium = rootView.findViewById(R.id.medium);
+        RadioButton high = rootView.findViewById(R.id.high);
+        low.setText(R.string.radio_low);
+        medium.setText(R.string.radio_medium);
+        high.setText(R.string.radio_high);
+        final RadioGroup urgencyRadioGroup = rootView.findViewById(R.id.urgency);
+        urgencyRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch(i) {
+                    case R.id.low:
+                        urgency = "Low";
+                        break;
+                    case R.id.medium:
+                        urgency = "Medium";
+                        break;
+                    case R.id.high:
+                        urgency = "High";
+                        break;
+                }
+            }
+        });
+
         //TODO user = ...
         user = new User(0, "test@gmail.com", "bon", "jean", "06", "mdp");
 
-        Button buttonAdd = (Button) rootView.findViewById(R.id.buttonAdd);
+        Button buttonAdd = rootView.findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(AddFragment.this);
-        ImageButton imageView = (ImageButton) rootView.findViewById(R.id.image1);
+        ImageButton imageView = rootView.findViewById(R.id.image1);
         imageView.setOnClickListener(AddFragment.this);
-        imageView = (ImageButton) rootView.findViewById(R.id.image2);
+        imageView = rootView.findViewById(R.id.image2);
         imageView.setOnClickListener(AddFragment.this);
-        imageView = (ImageButton) rootView.findViewById(R.id.image3);
+        imageView = rootView.findViewById(R.id.image3);
         imageView.setOnClickListener(AddFragment.this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -107,7 +145,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+                .setFastestInterval(1000); // 1 second, in milliseconds
 
         return rootView;
     }
@@ -129,8 +167,17 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         if (!cameraViewUp && data.getExtras() != null) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             cameraView.setImageBitmap(bitmap);
-            cameraViewUp = true;
         }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        category = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        category = "Autre";
     }
 
     @Override
@@ -157,27 +204,26 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     }
 
     private void onClickAdd(View view) {
-        EditText editCategory = (EditText) rootView.findViewById(R.id.editCategory);
-        String category = editCategory.getText().toString();
-        EditText editTitle = (EditText) rootView.findViewById(R.id.editTitle);
+        EditText editTitle = rootView.findViewById(R.id.editTitle);
         String title = editTitle.getText().toString();
-        EditText editPlace = (EditText) rootView.findViewById(R.id.editPlace);
+        EditText editPlace = rootView.findViewById(R.id.editPlace);
         String place = editPlace.getText().toString();
-        EditText editDescription = (EditText) rootView.findViewById(R.id.editDescription);
+        EditText editDescription = rootView.findViewById(R.id.editDescription);
         String description = editDescription.getText().toString();
-        EditText editPhone = (EditText) rootView.findViewById(R.id.editPhoneNb);
+        EditText editPhone = rootView.findViewById(R.id.editPhoneNb);
         String phone = editPhone.getText().toString();
-        String state = "TO DO";
         String email = user.getEmail();
-
-        String urgency = "High";
-        //TODO ajouter radio urgency
 
         Database database = new Database(getContext());
         Mishap mishap = new Mishap(0, title, category, description, latitude, longitude, urgency,
-                email, state, new Date().toString(), phone, place);
+                email, "TO DO", new Date().toString(), phone, place);
 
-        database.addMishap(mishap);
+        long res = database.addMishap(mishap);
+        if (res != -1) {
+            startActivity(new Intent(this.getContext(), ViewAndAddActivity.class));
+            getActivity().finish(); //Si on appuie sur la touche retour on revient sur la connexion
+        }
+
     }
 
     private void onClickCamera() {
@@ -193,7 +239,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     @Override
     public void onConnected(Bundle bundle) {
-        TextView textLocation = (TextView) rootView.findViewById(R.id.location);
+        TextView textLocation = rootView.findViewById(R.id.location);
         textLocation.setText(R.string.add_location_cantfind);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -214,7 +260,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -245,7 +291,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     public void onPause() {
         super.onPause();
         if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
     }
@@ -253,7 +299,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            TextView textLocation = (TextView) rootView.findViewById(R.id.location);
+            TextView textLocation = rootView.findViewById(R.id.location);
             mLocation = location;
             latitude = mLocation.getLatitude();
             longitude = mLocation.getLongitude();

@@ -52,7 +52,7 @@
                 android:text=""
                 android:textSize="15sp" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/editCategory"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -143,42 +143,62 @@
             android:id="@+id/textMandatory"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:gravity="right"
+            android:gravity="end"
             android:textColor="#8f0404"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+        
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/urgency">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:id="@+id/low" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medium" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/high" />
+        </RadioGroup>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/image1"
                 android:layout_width="50dp"
                 android:layout_height="67dp"
-                android:layout_marginHorizontal="50dp"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <ImageButton
                 android:id="@+id/image2"
                 android:layout_width="50dp"
                 android:layout_height="67dp"
+                android:layout_margin="80dp"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <ImageButton
                 android:id="@+id/image3"
                 android:layout_width="50dp"
                 android:layout_height="67dp"
-                android:layout_marginHorizontal="50dp"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/buttonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/add" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>

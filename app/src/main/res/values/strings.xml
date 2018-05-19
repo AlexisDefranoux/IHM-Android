@@ -22,4 +22,7 @@
     <string name="add_location_cantfind">Can\'t find location</string>
     <string name="add_location_last">Your last location is latitude %1$.2f and longitude %2$.2f</string>
     <string name="add_location_now">Your location is latitude %1$.2f and longitude %2$.2f</string>
+    <string name="radio_low">Low</string>
+    <string name="radio_medium">Medium</string>
+    <string name="radio_high">High</string>
 </resources>

@@ -1,13 +1,16 @@
 package fr.unice.polytech.polynews.fragments;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -64,6 +67,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     static private String email;
     private String urgency;
     private String category;
+    private Uri imageUri;
     private boolean [] addImage = new boolean[3];
     private ImageView cameraView;
     private int imageN;
@@ -168,19 +172,34 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         super.onActivityResult(requestCode, resultCode, data);
 
         if (data == null) return;
-        boolean added = false;
         try {
-            InputStream imageStream = getContext().getContentResolver().openInputStream(data.getData());
-            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            cameraView.setImageBitmap(selectedImage);
-            added = true;
-            addImage[imageN-1] = true;
-        } catch (Exception ignored) {
-        }
-        if (!added && data.getExtras() != null) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            cameraView.setImageBitmap(bitmap);
-            addImage[imageN-1] = true;
+            Bitmap selectedImage;
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                Uri uri = data.getData();
+                try { //Case 1 : permission + case gallery
+                    selectedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                } catch (Exception e) { //Case 2 : permission + case take photo
+                    String[] proj = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().managedQuery(imageUri, proj, null, null, null);
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    selectedImage = BitmapFactory.decodeFile(cursor.getString(column_index));
+                }
+            } else { //case 3 : no permission + case take photo
+                InputStream imageStream = getContext().getContentResolver().openInputStream(data.getData());
+                selectedImage = BitmapFactory.decodeStream(imageStream);
+            }
+            if (selectedImage != null) {
+                cameraView.setImageBitmap(selectedImage);
+                addImage[imageN - 1] = true;
+            }
+        } catch (Exception e) {
+            if (data.getExtras() != null) { //case 4 : no permission + case gallery
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                cameraView.setImageBitmap(bitmap);
+                addImage[imageN-1] = true;
+            }
         }
     }
 
@@ -238,25 +257,31 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
         byte[] image1 = null, image2 = null, image3 = null;
         if (addImage[0]) {
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.image1);
+            ImageView imageView = rootView.findViewById(R.id.image1);
             Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            image1 = baos.toByteArray();
+            if (bitmap != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                image1 = baos.toByteArray();
+            }
         }
         if (addImage[1]) {
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.image2);
+            ImageView imageView = rootView.findViewById(R.id.image2);
             Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            image2 = baos.toByteArray();
+            if (bitmap != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                image2 = baos.toByteArray();
+            }
         }
         if (addImage[2]) {
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.image3);
+            ImageView imageView = rootView.findViewById(R.id.image3);
             Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            image3 = baos.toByteArray();
+            if (bitmap != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                image3 = baos.toByteArray();
+            }
         }
 
         Database database = new Database(getContext());
@@ -275,6 +300,16 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     private void onClickCamera() {
         Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+            imageUri = getContext().getContentResolver().insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            intentTakePhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            //can write on external storage : save photo for a better quality
+        }
+
         Intent intentGalery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent chooser = new Intent(Intent.createChooser(intentGalery, "Open with"));
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intentTakePhoto});

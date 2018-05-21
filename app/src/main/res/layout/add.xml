@@ -191,21 +191,24 @@
 
             <ImageButton
                 android:id="@+id/image1"
-                android:layout_width="50dp"
-                android:layout_height="67dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <ImageButton
                 android:id="@+id/image2"
-                android:layout_width="50dp"
-                android:layout_height="67dp"
-                android:layout_margin="80dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:layout_margin="50dp"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <ImageButton
                 android:id="@+id/image3"
-                android:layout_width="50dp"
-                android:layout_height="67dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
         </LinearLayout>

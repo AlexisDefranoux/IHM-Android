@@ -18,9 +18,13 @@ public class Mishap {
     private String date;
     private String phone;
     private String place;
+    private byte[] image1;
+    private byte[] image2;
+    private byte[] image3;
 
-    public Mishap(int idMishap, String titleMishap, String category, String description, double latitude,
-                  double longitude, String urgency, String email, String state, String date, String phone, String place) {
+    public Mishap(int idMishap, String titleMishap, String category, String description, double latitude, double longitude,
+                  String urgency, String email, String state, String date, String phone, String place,
+                  byte[] image1, byte[] image2, byte[] image3) {
         this.idMishap = idMishap;
         this.titleMishap = titleMishap;
         this.category = category;
@@ -33,6 +37,9 @@ public class Mishap {
         this.date = date;
         this.phone = phone;
         this.place = place;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
     }
 
     public int getIdMishap() {
@@ -63,12 +70,6 @@ public class Mishap {
         return urgency;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public String getPhone() { return phone; }
-
     public String getEmail() {
         return email;
     }
@@ -77,7 +78,27 @@ public class Mishap {
         return state;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public String getPlace() {
         return place;
+    }
+
+    public byte[] getImage1() {
+        return image1;
+    }
+
+    public byte[] getImage2() {
+        return image2;
+    }
+
+    public byte[] getImage3() {
+        return image3;
     }
 }

@@ -6,6 +6,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +36,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Date;
 
@@ -59,10 +61,12 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private double latitude;
     private double longitude;
     private boolean putLocation;
-    private ImageView cameraView;
     static private String email;
     private String urgency;
     private String category;
+    private boolean [] addImage = new boolean[3];
+    private ImageView cameraView;
+    private int imageN;
 
     public AddFragment() {
     }
@@ -137,9 +141,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
             }
         });
 
-        //TODO user = ...
-        //user = new User(0, "test@gmail.com", "bon", "jean", "06", "mdp");
-
         Button buttonAdd = rootView.findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(AddFragment.this);
         ImageButton imageView = rootView.findViewById(R.id.image1);
@@ -166,19 +167,20 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        boolean cameraViewUp = false;
-
         if (data == null) return;
+        boolean added = false;
         try {
             InputStream imageStream = getContext().getContentResolver().openInputStream(data.getData());
             Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             cameraView.setImageBitmap(selectedImage);
-            cameraViewUp = true;
+            added = true;
+            addImage[imageN-1] = true;
         } catch (Exception ignored) {
         }
-        if (!cameraViewUp && data.getExtras() != null) {
+        if (!added && data.getExtras() != null) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             cameraView.setImageBitmap(bitmap);
+            addImage[imageN-1] = true;
         }
     }
 
@@ -202,14 +204,17 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
             case R.id.image1:
                 cameraView = rootView.findViewById(R.id.image1);
+                imageN = 1;
                 onClickCamera();
                 break;
             case R.id.image2:
                 cameraView = rootView.findViewById(R.id.image2);
+                imageN = 2;
                 onClickCamera();
                 break;
             case R.id.image3:
                 cameraView = rootView.findViewById(R.id.image3);
+                imageN = 3;
                 onClickCamera();
                 break;
         }
@@ -231,9 +236,32 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
             longi = longitude;
         }
 
+        byte[] image1 = null, image2 = null, image3 = null;
+        if (addImage[0]) {
+            ImageView imageView = (ImageView) rootView.findViewById(R.id.image1);
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            image1 = baos.toByteArray();
+        }
+        if (addImage[1]) {
+            ImageView imageView = (ImageView) rootView.findViewById(R.id.image2);
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            image2 = baos.toByteArray();
+        }
+        if (addImage[2]) {
+            ImageView imageView = (ImageView) rootView.findViewById(R.id.image3);
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            image3 = baos.toByteArray();
+        }
+
         Database database = new Database(getContext());
         Mishap mishap = new Mishap(0, title, category, description, lati, longi, urgency,
-                email, "TO DO", new Date().toString(), phone, place);
+                email, "TO DO", new Date().toString(), phone, place, image1, image2, image3);
 
         long res = database.addMishap(mishap);
         if (res != -1) {
@@ -251,9 +279,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         Intent chooser = new Intent(Intent.createChooser(intentGalery, "Open with"));
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intentTakePhoto});
         startActivityForResult(chooser,0);
-
-        //startActivityForResult(intentTakePhoto, 0);
-        //startActivityForResult(intentGalery, 1);
     }
 
     @Override

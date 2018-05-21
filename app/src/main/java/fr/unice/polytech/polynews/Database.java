@@ -25,6 +25,9 @@ public class Database extends SQLiteOpenHelper {
     private static final String Mishap_STATE = "state";
     private static final String Mishap_DATE = "dateMishap";
     private static final String Mishap_PHONE = "phone";
+    private static final String Mishap_IMAGE1 = "image1";
+    private static final String Mishap_IMAGE2 = "image2";
+    private static final String Mishap_IMAGE3 = "image3";
 
     private static final String Mishap_TABLE_NAME = "Mishap";
 
@@ -40,14 +43,17 @@ public class Database extends SQLiteOpenHelper {
                     Mishap_STATE +" TEXT, "+
                     Mishap_DATE +" TEXT, "+
                     Mishap_PLACE +" TEXT, "+
-                    Mishap_PHONE+" TEXT) ";
+                    Mishap_PHONE+" TEXT, "+
+                    Mishap_IMAGE1+" BLOB, "+
+                    Mishap_IMAGE2+" BLOB, "+
+                    Mishap_IMAGE3+" BLOB) ";
 
-    private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place) " +
-            "VALUES ('A chair is broken', 'Casse', 'A chair is broken in the room 0+123','37.4219983', '-122.084', 'Medium', 'marion@etu.unice.fr', 'Done', '16/05/18', '', 'E-235');";
-    private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place)" +
-            "VALUES ('Defaulting distributor', 'Dysfonctionnement', 'The distributor in the west building has an important problem, contact me for more details','50.002', '140.5', 'High', 'alexis@etu.unice.fr', 'To do', '10/05/18', '1651010102', '');";
-    private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place)" +
-            "VALUES ('Video projector problem', 'Autre', 'The video projector in the room E+355 make some strange noise, I think its a good idea to check it', '37.4219983', '-122', 'Medium', 'ruheureuh@unice.fr', 'Done', '14/05/18', '0651010101', 'Amphi Nord');";
+    private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3) " +
+            "VALUES ('A chair is broken', 'Casse', 'A chair is broken in the room 0+123','37.4219983', '-122.084', 'Medium', 'marion@etu.unice.fr', 'Done', '16/05/18', '', 'E-235', null, null, null);";
+    private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
+            "VALUES ('Defaulting distributor', 'Dysfonctionnement', 'The distributor in the west building has an important problem, contact me for more details','50.002', '140.5', 'High', 'alexis@etu.unice.fr', 'To do', '10/05/18', '1651010102', '', null, null, null);";
+    private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
+            "VALUES ('Video projector problem', 'Autre', 'The video projector in the room E+355 make some strange noise, I think its a good idea to check it', '37.4219983', '-122', 'Medium', 'ruheureuh@unice.fr', 'Done', '14/05/18', '0651010101', 'Amphi Nord', null, null, null);";
 
 
     private static final String PHOTO_TABLE_NAME = "photos";
@@ -109,10 +115,13 @@ public class Database extends SQLiteOpenHelper {
         String date = c.getString(9);
         String place = c.getString(10);
         String phone = c.getString(11);
+        byte[] image1 = c.getBlob(12);
+        byte[] image2 = c.getBlob(13);
+        byte[] image3 = c.getBlob(14);
 
 
         return new Mishap(idMishap, titleMishap, category, description, latitude, longitude,
-                urgency, email, state, date, phone, place);
+                urgency, email, state, date, phone, place, image1, image2, image3);
     }
 
     public Mishap getMishap(int id){
@@ -150,6 +159,9 @@ public class Database extends SQLiteOpenHelper {
         values.put(Mishap_DATE, Mishap.getDate());
         values.put(Mishap_PHONE, Mishap.getPhone());
         values.put(Mishap_PLACE, Mishap.getPlace());
+        values.put(Mishap_IMAGE1, Mishap.getImage1());
+        values.put(Mishap_IMAGE2, Mishap.getImage2());
+        values.put(Mishap_IMAGE3, Mishap.getImage3());
 
         long id  = db.insert(Mishap_TABLE_NAME, null, values);
         db.close();

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.unice.polytech.polynews.R;
-import fr.unice.polytech.polynews.asyncTasks.LoadImages;
 import fr.unice.polytech.polynews.models.Mishap;
 
 /**
@@ -42,20 +41,25 @@ public class NewsCustomAdapter extends ArrayAdapter<Mishap> {
         ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
         Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.placeholder);
         imageView.setImageBitmap(bitmap);
-        LoadImages loadImages = new LoadImages(imageView);
-        ImageView play = convertView.findViewById(R.id.play);
-
 
         TextView titre = convertView.findViewById(R.id.titre);
         titre.setText(mishap.getTitleMishap());
 
         TextView date = convertView.findViewById(R.id.date);
-        date.setText(mishap.getDate().toString());
+        date.setText(mishap.getDate());
 
         TextView cat = convertView.findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
 
         convertView.findViewById(R.id.tablelayout).setTag(position);
+
+        byte[] image1 = mishap.getImage1(), image2 = mishap.getImage2(), image3 = mishap.getImage3();
+        if (image1 != null)
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image1, 0, image1.length));
+        else if (image2 != null)
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image2, 0, image2.length));
+        else if (image3 != null)
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image3, 0, image3.length));
 
         return convertView;
     }

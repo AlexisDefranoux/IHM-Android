@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import fr.unice.polytech.polynews.asyncTasks.LoadImages;
 import fr.unice.polytech.polynews.models.Mishap;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -27,11 +26,21 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Mishap mishap = new Database(getApplicationContext()).getMishap(position+1);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.placeholder);
         imageView.setImageBitmap(bitmap);
-        LoadImages loadImages = new LoadImages(imageView);
-        ImageView play = findViewById(R.id.play);
+
+        byte[] image1 = mishap.getImage1(), image2 = mishap.getImage2(), image3 = mishap.getImage3();
+        if (image1 != null) {
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image1, 0, image1.length));
+            imageView = (ImageView) findViewById(R.id.imageView2);
+        }
+        if (image2 != null) {
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image2, 0, image2.length));
+            imageView = (ImageView) findViewById(R.id.imageView3);
+        }
+        if (image3 != null)
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image3, 0, image3.length));
 
         TextView titre = findViewById(R.id.titre);
         titre.setText(mishap.getTitleMishap());

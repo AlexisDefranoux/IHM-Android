@@ -155,12 +155,14 @@
             <CheckBox
                 android:id="@+id/addLocation"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
             <TextView
                 android:id="@+id/location"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:text="TextView" />
         </LinearLayout>
         

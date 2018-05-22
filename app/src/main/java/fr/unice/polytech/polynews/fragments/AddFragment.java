@@ -101,7 +101,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         textTitle.setText(R.string.add_title);
         textDescription.setText(R.string.add_description);
         textCategory.setText(R.string.add_category);
-        textPlace.setText(R.string.add_place);
+        textPlace.setText(R.string.add_place_mandatory);
         textPhoneNb.setText(R.string.add_phone_number);
         textMandatory.setText(R.string.add_mandatory);
 
@@ -111,14 +111,23 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         editCategory.setAdapter(dataAdapter);
         editCategory.setOnItemSelectedListener(this);
 
-        final CheckBox addLocation = rootView.findViewById(R.id.addLocation);
-        addLocation.setText(R.string.add_location_checkbox);
-        addLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                putLocation = b;
-            }
-        });
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            CheckBox addLocation = rootView.findViewById(R.id.addLocation);
+            addLocation.setVisibility(View.VISIBLE);
+            addLocation.setText(R.string.add_location_checkbox);
+            addLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                TextView textPlace = rootView.findViewById(R.id.textPlace);
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    putLocation = b;
+                    if (b)
+                        textPlace.setText(R.string.add_place);
+                    else
+                        textPlace.setText(R.string.add_place_mandatory);
+                }
+            });
+        }
 
         urgency = "Low";
         final RadioButton low = rootView.findViewById(R.id.low);
@@ -318,12 +327,12 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     @Override
     public void onConnected(Bundle bundle) {
-        TextView textLocation = rootView.findViewById(R.id.location);
-        textLocation.setText(R.string.add_location_cantfind);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return; //Not enough permissions
         }
+        TextView textLocation = rootView.findViewById(R.id.location);
+        textLocation.setVisibility(View.VISIBLE);
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
             textLocation.setText(getString(R.string.add_location_now, latitude, longitude));

@@ -20,6 +20,7 @@
     <string name="add_phone_number">"Phone number : </string>
     <string name="add_mandatory">* Mandatory</string>
     <string name="add_place">Place : </string>
+    <string name="add_place_mandatory">Place * : </string>
     <string name="add_category">Category : </string>
     <string name="add_location_cantfind">Can\'t find location</string>
     <string name="add_location_checkbox">add your location ? </string>

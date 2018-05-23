@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.net.Uri;
@@ -28,8 +29,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -233,6 +232,38 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         }
     }
 
+    private Bitmap getResizedBitmap(Bitmap bm, int value) {
+        int newWidth = 0, newHeight = 0;
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        if (width < value && height < value) return bm;
+        if (width > height) newWidth = value;
+        else newHeight = value;
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        if(scaleHeight == 0) matrix.postScale(scaleWidth, scaleWidth);
+        else matrix.postScale(scaleHeight, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        return Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+    }
+
+    private byte[] imageViewToByte(ImageView imageView) {
+        Bitmap bitmap = getResizedBitmap(((BitmapDrawable) imageView.getDrawable()).getBitmap(), 1000);
+        if (bitmap != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            return baos.toByteArray();
+        }
+        return null;
+    }
+
     private void onClickAdd(View view) {
         EditText editTitle = rootView.findViewById(R.id.editTitle);
         String title = editTitle.getText().toString();
@@ -252,30 +283,15 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         byte[] image1 = null, image2 = null, image3 = null;
         if (addImage[0]) {
             ImageView imageView = rootView.findViewById(R.id.image1);
-            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            if (bitmap != null) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                image1 = baos.toByteArray();
-            }
+            image1 = imageViewToByte(imageView);
         }
         if (addImage[1]) {
             ImageView imageView = rootView.findViewById(R.id.image2);
-            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            if (bitmap != null) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                image2 = baos.toByteArray();
-            }
+            image2 = imageViewToByte(imageView);
         }
         if (addImage[2]) {
             ImageView imageView = rootView.findViewById(R.id.image3);
-            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            if (bitmap != null) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                image3 = baos.toByteArray();
-            }
+            image3 = imageViewToByte(imageView);
         }
 
         Database database = new Database(getContext());

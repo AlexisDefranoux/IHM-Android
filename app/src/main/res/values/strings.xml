@@ -23,5 +23,5 @@
     <string name="add_place_mandatory">Lieu * : </string>
     <string name="add_category">Catégorie : </string>
     <string name="add_location_checkbox">Me géolocaliser ? </string>
-    <string name="add_location_now">latitude %1$.2f and longitude %2$.2f</string>
+    <string name="add_location_now">lat %1$.4f et long %2$.4f</string>
 </resources>

@@ -1,8 +1,8 @@
-package fr.unice.polytech.polynews;
+package fr.unice.polytech.polynews.activities;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.Manifest;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,18 +11,28 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import fr.unice.polytech.polynews.fragments.NewsGridFragment;
-import fr.unice.polytech.polynews.fragments.AddFragment;
+import fr.unice.polytech.polynews.R;
+import fr.unice.polytech.polynews.fragments.ConnectionFragment;
 
-public class ViewAndAddActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    public void SeeDetails(View view) {
-        Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-        intent.putExtra("position", view.getTag().toString());
-        startActivityForResult(intent, 0);
-    }
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +40,24 @@ public class ViewAndAddActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        ViewPager mViewPager = findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
 
     }
 
@@ -54,33 +67,23 @@ public class ViewAndAddActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        @NonNull
-        private final String[] pageTitles = {"Mes incidents", "Ajouter un incident"};
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a AddFragment (defined as a static inner class below).
-            //return AddFragment.newInstance(position + 1);
-            if (position == 0)
-                return NewsGridFragment.newInstance(position + 1);
-            return AddFragment.newInstance(position + 1, getIntent().getStringExtra("email"));
+            return ConnectionFragment.newInstance();
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position > pageTitles.length - 1)
-                throw new IllegalArgumentException("<ommitted>");
-            return pageTitles[position];
+            return "Connexion";
         }
     }
 }

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import fr.unice.polytech.polynews.ViewAndAddActivity;
+import fr.unice.polytech.polynews.activities.ViewAndAddActivity;
 import fr.unice.polytech.polynews.R;
 
 /**

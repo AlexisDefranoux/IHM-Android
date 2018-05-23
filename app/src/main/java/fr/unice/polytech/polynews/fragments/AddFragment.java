@@ -44,7 +44,7 @@ import java.util.Date;
 
 import fr.unice.polytech.polynews.Database;
 import fr.unice.polytech.polynews.R;
-import fr.unice.polytech.polynews.ViewAndAddActivity;
+import fr.unice.polytech.polynews.activities.ViewAndAddActivity;
 import fr.unice.polytech.polynews.models.Mishap;
 
 import static com.google.android.gms.plus.PlusOneDummyView.TAG;

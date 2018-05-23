@@ -1,4 +1,4 @@
-package fr.unice.polytech.polynews;
+package fr.unice.polytech.polynews.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import fr.unice.polytech.polynews.Database;
+import fr.unice.polytech.polynews.R;
 import fr.unice.polytech.polynews.models.Mishap;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -103,6 +106,11 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra("latitude", mishap.getLatitude());
                 intent.putExtra("longitude", mishap.getLongitude());
+                if(mishap.getPlace() == null || mishap.getPlace().equals(""))
+                    intent.putExtra("titre", mishap.getTitleMishap());
+                else
+                    intent.putExtra("titre", mishap.getPlace());
+
                 startActivityForResult(intent, 0);
             }
         });

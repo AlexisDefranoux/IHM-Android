@@ -52,7 +52,10 @@ public class DetailsActivity extends AppCompatActivity {
         autor.setText(mishap.getEmail());
 
         TextView ur = findViewById(R.id.urgency);
-        ur.setText(mishap.getUrgency());
+        if (mishap.getUrgency())
+            ur.setText("Urgent");
+        else
+            ur.setText("non urgent");
 
         TextView cat = findViewById(R.id.cat);
         cat.setText(mishap.getCategory());

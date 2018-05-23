@@ -16,15 +16,12 @@
     <string name="google_map">GOOGLE MAP</string>
     <string name="title_activity_maps">Map</string>
     <string name="add_title">Titre * : </string>
-    <string name="add_description">Description * : </string>
+    <string name="add_description">Description : </string>
     <string name="add_phone_number">Téléphone : </string>
     <string name="add_mandatory">* Obligatoire</string>
     <string name="add_place">Lieu : </string>
     <string name="add_place_mandatory">Lieu * : </string>
     <string name="add_category">Catégorie : </string>
-    <string name="add_location_checkbox">Ajouter ma géolocalisation ? </string>
+    <string name="add_location_checkbox">Me géolocaliser ? </string>
     <string name="add_location_now">latitude %1$.2f and longitude %2$.2f</string>
-    <string name="radio_low">Low</string>
-    <string name="radio_medium">Medium</string>
-    <string name="radio_high">High</string>
 </resources>

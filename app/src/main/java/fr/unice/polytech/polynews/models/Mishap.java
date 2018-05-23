@@ -12,7 +12,7 @@ public class Mishap {
     private String description;
     private double latitude;
     private double longitude;
-    private String urgency;
+    private boolean urgency;
     private String email;
     private String state;
     private String date;
@@ -23,7 +23,7 @@ public class Mishap {
     private byte[] image3;
 
     public Mishap(int idMishap, String titleMishap, String category, String description, double latitude, double longitude,
-                  String urgency, String email, String state, String date, String phone, String place,
+                  boolean urgency, String email, String state, String date, String phone, String place,
                   byte[] image1, byte[] image2, byte[] image3) {
         this.idMishap = idMishap;
         this.titleMishap = titleMishap;
@@ -66,7 +66,7 @@ public class Mishap {
         return longitude;
     }
 
-    public String getUrgency() {
+    public boolean getUrgency() {
         return urgency;
     }
 

@@ -65,7 +65,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private double longitude;
     private boolean putLocation;
     static private String email;
-    private String urgency;
+    private Boolean urgency;
     private String category;
     private Uri imageUri;
     private boolean [] addImage = new boolean[3];
@@ -106,7 +106,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         textMandatory.setText(R.string.add_mandatory);
 
         Spinner editCategory = rootView.findViewById(R.id.editCategory);
-        String [] categories = new String[] {"Autre", "Manque", "Casse", "Dysfonctionnement", "Propreté"};
+        String [] categories = new String[] {"Autre", "Informatique","Eléctrique","Plomberie", "Propreté"};
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories);
         editCategory.setAdapter(dataAdapter);
         editCategory.setOnItemSelectedListener(this);
@@ -129,30 +129,15 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
             });
         }
 
-        urgency = "Low";
-        final RadioButton low = rootView.findViewById(R.id.low);
-        RadioButton medium = rootView.findViewById(R.id.medium);
-        RadioButton high = rootView.findViewById(R.id.high);
-        low.setText(R.string.radio_low);
-        medium.setText(R.string.radio_medium);
-        high.setText(R.string.radio_high);
-        final RadioGroup urgencyRadioGroup = rootView.findViewById(R.id.urgency);
-        urgencyRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        urgency = false;
+        CheckBox checkBox = rootView.findViewById(R.id.checkBox);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch(i) {
-                    case R.id.low:
-                        urgency = "Low";
-                        break;
-                    case R.id.medium:
-                        urgency = "Medium";
-                        break;
-                    case R.id.high:
-                        urgency = "High";
-                        break;
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                urgency = b;
             }
         });
+
 
         Button buttonAdd = rootView.findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(AddFragment.this);
@@ -295,7 +280,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
         Database database = new Database(getContext());
         Mishap mishap = new Mishap(0, title, category, description, lati, longi, urgency,
-                email, "TO DO", new Date().toString(), phone, place, image1, image2, image3);
+                email, "Non traité", new Date().toString(), phone, place, image1, image2, image3);
 
         long res = database.addMishap(mishap);
         if (res != -1) {
@@ -311,8 +296,8 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+            values.put(MediaStore.Images.Media.TITLE, "Nouvelle photo");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "Depuis l'appareil photo");
             imageUri = getContext().getContentResolver().insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             intentTakePhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -320,7 +305,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         }
 
         Intent intentGalery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent chooser = new Intent(Intent.createChooser(intentGalery, "Open with"));
+        Intent chooser = new Intent(Intent.createChooser(intentGalery, "Ouvrir avec"));
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intentTakePhoto});
         startActivityForResult(chooser,0);
     }

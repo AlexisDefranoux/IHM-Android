@@ -97,13 +97,11 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         TextView textDescription = rootView.findViewById(R.id.textDescription);
         TextView textCategory = rootView.findViewById(R.id.textCategory);
         TextView textPlace = rootView.findViewById(R.id.textPlace);
-        TextView textPhoneNb = rootView.findViewById(R.id.textPhoneNb);
         TextView textMandatory = rootView.findViewById(R.id.textMandatory);
         textTitle.setText(R.string.add_title);
         textDescription.setText(R.string.add_description);
         textCategory.setText(R.string.add_category);
         textPlace.setText(R.string.add_place_mandatory);
-        textPhoneNb.setText(R.string.add_phone_number);
         textMandatory.setText(R.string.add_mandatory);
 
         Spinner editCategory = rootView.findViewById(R.id.editCategory);
@@ -284,8 +282,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         String place = editPlace.getText().toString();
         EditText editDescription = rootView.findViewById(R.id.editDescription);
         String description = editDescription.getText().toString();
-        EditText editPhone = rootView.findViewById(R.id.editPhoneNb);
-        String phone = editPhone.getText().toString();
 
         double lati = 0, longi = 0;
         if (putLocation) {
@@ -311,7 +307,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
         Database database = new Database(getContext());
         Mishap mishap = new Mishap(0, title, category, description, lati, longi, urgency,
-                email, "Non traité", date, phone, place, image1, image2, image3);
+                email, "Non traité", new Date().toString(), "0664035799", place, image1, image2, image3);
 
         long res = database.addMishap(mishap);
         if (res != -1) {
@@ -344,8 +340,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     @Override
     public void onConnected(Bundle bundle) {
-        TextView textLocation = rootView.findViewById(R.id.location);
-        textLocation.setVisibility(View.INVISIBLE);
         CheckBox addLocation = rootView.findViewById(R.id.addLocation);
         addLocation.setVisibility(View.INVISIBLE);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -354,8 +348,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
-            textLocation.setText(getString(R.string.add_location_now, latitude, longitude));
-            textLocation.setVisibility(View.VISIBLE);
             addLocation.setVisibility(View.VISIBLE);
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
@@ -408,14 +400,11 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            TextView textLocation = rootView.findViewById(R.id.location);
-            textLocation.setVisibility(View.VISIBLE);
             CheckBox addLocation = rootView.findViewById(R.id.addLocation);
             addLocation.setVisibility(View.VISIBLE);
             mLocation = location;
             latitude = mLocation.getLatitude();
             longitude = mLocation.getLongitude();
-            textLocation.setText(getString(R.string.add_location_now, latitude, longitude));
         }
     }
 }

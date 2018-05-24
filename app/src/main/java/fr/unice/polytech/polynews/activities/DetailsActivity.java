@@ -88,8 +88,7 @@ public class DetailsActivity extends AppCompatActivity {
         callButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(mishap.getPhone()));
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", mishap.getPhone(), null));
                 startActivity(callIntent);
             }});
 
@@ -102,7 +101,6 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                startActivity(intent);
                 startActivity(Intent.createChooser(intent, mishap.getEmail()));
             }
         });

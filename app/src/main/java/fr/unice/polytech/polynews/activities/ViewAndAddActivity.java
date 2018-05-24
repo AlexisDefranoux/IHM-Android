@@ -52,6 +52,12 @@ public class ViewAndAddActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        int fragmentNumber = 0;
+        try {
+            fragmentNumber = Integer.parseInt(getIntent().getStringExtra("fragmentNumber"));
+        } catch (Exception ignored) { }
+        mViewPager.setCurrentItem(fragmentNumber);
+
     }
 
     /**

@@ -64,7 +64,8 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     private double longitude;
     private boolean putLocation;
     static private String email;
-    private Boolean urgency;
+    private boolean urgency;
+    private String fragmentNumber = "0";
     private String category;
     private Uri imageUri;
     private boolean [] addImage = new boolean[3];
@@ -113,7 +114,6 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             CheckBox addLocation = rootView.findViewById(R.id.addLocation);
-            addLocation.setVisibility(View.VISIBLE);
             addLocation.setText(R.string.add_location_checkbox);
             addLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 TextView textPlace = rootView.findViewById(R.id.textPlace);
@@ -127,6 +127,18 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
                 }
             });
         }
+
+        CheckBox addManyCheck = rootView.findViewById(R.id.addMany);
+        addManyCheck.setText(R.string.addMany);
+        addManyCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    fragmentNumber = "1";
+                else
+                    fragmentNumber = "0";
+            }
+        });
 
         urgency = false;
         CheckBox checkBox = rootView.findViewById(R.id.checkBox);
@@ -302,6 +314,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         if (res != -1) {
             Intent intent = new Intent(getContext(), ViewAndAddActivity.class);
             intent.putExtra("email", email);
+            intent.putExtra("fragmentNumber", fragmentNumber);
             startActivityForResult(intent, 0);
             getActivity().finish(); //Si on appuie sur la touche retour on revient sur la connexion
         }
@@ -328,15 +341,19 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
     @Override
     public void onConnected(Bundle bundle) {
+        TextView textLocation = rootView.findViewById(R.id.location);
+        textLocation.setVisibility(View.INVISIBLE);
+        CheckBox addLocation = rootView.findViewById(R.id.addLocation);
+        addLocation.setVisibility(View.INVISIBLE);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return; //Not enough permissions
         }
-        TextView textLocation = rootView.findViewById(R.id.location);
-        textLocation.setVisibility(View.VISIBLE);
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
             textLocation.setText(getString(R.string.add_location_now, latitude, longitude));
+            textLocation.setVisibility(View.VISIBLE);
+            addLocation.setVisibility(View.VISIBLE);
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                 mLocationRequest, this);
@@ -389,6 +406,9 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
     public void onLocationChanged(Location location) {
         if (location != null) {
             TextView textLocation = rootView.findViewById(R.id.location);
+            textLocation.setVisibility(View.VISIBLE);
+            CheckBox addLocation = rootView.findViewById(R.id.addLocation);
+            addLocation.setVisibility(View.VISIBLE);
             mLocation = location;
             latitude = mLocation.getLatitude();
             longitude = mLocation.getLongitude();

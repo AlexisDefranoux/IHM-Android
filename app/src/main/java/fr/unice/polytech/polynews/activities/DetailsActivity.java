@@ -99,9 +99,15 @@ public class DetailsActivity extends AppCompatActivity {
         Button mailButton = findViewById(R.id.mailButton);
         mailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                startActivity(Intent.createChooser(intent, mishap.getEmail()));
+                /*Intent emailIntent = new Intent(Intent.ACTION_MAIN);
+                emailIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                startActivity(emailIntent);*/
+                Intent emailIntent = new Intent(Intent.ACTION_VIEW);
+                Uri data = Uri.parse("mailto:" + "robertflorent11@gmail.com" + "?subject=" + "Error" + "&body=" + "An error");
+                emailIntent.setData(data);
+                startActivity(emailIntent);
+
+
             }
         });
 

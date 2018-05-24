@@ -79,7 +79,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         Button smsButton = findViewById(R.id.smsButton);
         smsButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("MissingPermission")
             public void onClick(View v) {
                 String number = mishap.getPhone();
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", number, null)));
@@ -98,6 +97,15 @@ public class DetailsActivity extends AppCompatActivity {
             phoneZone.setVisibility(View.GONE);
         }
 
+        Button mailButton = findViewById(R.id.mailButton);
+        mailButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                startActivity(intent);
+                startActivity(Intent.createChooser(intent, mishap.getEmail()));
+            }
+        });
 
         final Button gmaps = findViewById(R.id.gmaps);
         gmaps.setOnClickListener(new View.OnClickListener() {

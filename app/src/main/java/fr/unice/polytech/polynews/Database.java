@@ -49,7 +49,7 @@ public class Database extends SQLiteOpenHelper {
                     Mishap_IMAGE3+" BLOB) ";
 
     private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3) " +
-            "VALUES ('A chair is broken', 'Informatique', 'A chair is broken in the room 0+123','37.4219983', '-122.084', 'false', 'marion@etu.unice.fr', 'Non traité', '16/05/18', '', 'E-235', null, null, null);";
+            "VALUES ('A chair is broken', 'Informatique', 'A chair is broken in the room 0+123','43.616259', '7.072422', 'false', 'marion@etu.unice.fr', 'Non traité', '16/05/18', '', 'E-235', null, null, null);";
     private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
             "VALUES ('Defaulting distributor', 'Plomberie', 'The distributor in the west building has an important problem, contact me for more details','50.002', '140.5', 'true', 'alexis@etu.unice.fr', 'En cours', '10/05/18', '1651010102', '', null, null, null);";
     private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +

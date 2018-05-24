@@ -40,7 +40,7 @@ public class MapsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     MapView mapView;
     GoogleMap map;
-    LatLng latLng = new LatLng(43, 7);
+    LatLng latLng = new LatLng(43.615568, 7.071767);
     Circle circle;
     List<Mishap> mishaps;
     Location location = new Location("");
@@ -69,13 +69,6 @@ public class MapsFragment extends Fragment {
         // Gets to GoogleMap from the MapView and does initialization stuff
         map = mapView.getMap();
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             System.out.print("Erreur manque des permissions");
         }
         map.setMyLocationEnabled(true);
@@ -89,7 +82,7 @@ public class MapsFragment extends Fragment {
         final TextView distance = rootView.findViewById(R.id.distance);
 
         SeekBar seekBar =(SeekBar) rootView.findViewById(R.id.seekBar);
-        distance.setText(seekBar.getProgress() + " km");
+        distance.setText(seekBar.getProgress() + " m");
         drawCircle(latLng, seekBar.getProgress());
         updateMarker(seekBar.getProgress());
 
@@ -99,7 +92,7 @@ public class MapsFragment extends Fragment {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
-                distance.setText(seekBar.getProgress() + " km");
+                distance.setText(seekBar.getProgress() + " m");
                 // Drawing circle on the map
                 drawCircle(latLng, progressChangedValue);
                 updateMarker(progressChangedValue);
@@ -128,6 +121,7 @@ public class MapsFragment extends Fragment {
             }
 
             if(distanceInMeters > size && markerMap.containsKey(distanceInMeters)){
+                markerMap.get(distanceInMeters).remove();
                 markerMap.remove(distanceInMeters);
             }
         }

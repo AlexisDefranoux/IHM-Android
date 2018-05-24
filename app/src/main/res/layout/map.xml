@@ -29,7 +29,7 @@
                 android:id="@+id/seekBar"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
-                android:max="500"
+                android:max="200"
                 android:min="1"
                 android:progress="50" />
 

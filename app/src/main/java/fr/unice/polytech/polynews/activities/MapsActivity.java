@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(sydney, 16);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(sydney, 17);
         mMap.animateCamera(cameraUpdate);
 
         Circle circle = mMap.addCircle(new CircleOptions()

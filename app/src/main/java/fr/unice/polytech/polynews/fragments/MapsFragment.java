@@ -76,7 +76,7 @@ public class MapsFragment extends Fragment {
         MapsInitializer.initialize(this.getActivity());
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
         map.animateCamera(cameraUpdate);
 
         final TextView distance = rootView.findViewById(R.id.distance);

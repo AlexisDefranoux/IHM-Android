@@ -307,7 +307,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
 
         Database database = new Database(getContext());
         Mishap mishap = new Mishap(0, title, category, description, lati, longi, urgency,
-                email, "Non traité", new Date().toString(), "0664035799", place, image1, image2, image3);
+                email, "Non traité", date, "0664035799", place, image1, image2, image3);
 
         long res = database.addMishap(mishap);
         if (res != -1) {

@@ -49,11 +49,15 @@ public class Database extends SQLiteOpenHelper {
                     Mishap_IMAGE3+" BLOB) ";
 
     private static final String Mishap_INSERT = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3) " +
-            "VALUES ('Arbre tombé', 'Autre', 'Un arbre est tombé sur un banc, voir mes coord gps pour lemplacement exact','43.616259', '7.072422', 'false', 'oscar@etu.unice.fr', 'Non traité', '16/05/18', '', 'E-235', null, null, null);";
+            "VALUES ('Arbre tombé', 'Autre', 'Un arbre est tombé sur un banc, voir mes coord gps pour lemplacement exact','43.615869', '7.070181', 'false', 'oscar@etu.unice.fr', 'Non traité', '16/05/18', '', 'E-235', null, null, null);";
     private static final String Mishap_INSERT2 =  " INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
-            "VALUES ('Distributeur défaillant', 'Autre', 'Le distributeur du bâtiment ouest est défaillant, contactez moi pour plus de détails, si nécessaire','50.002', '140.5', 'true', 'oscar@etu.unice.fr', 'En cours', '10/05/18', '1651010102', '', null, null, null);";
+            "VALUES ('Distributeur défaillant', 'Autre', 'Le distributeur du bâtiment ouest est défaillant, contactez moi pour plus de détails, si nécessaire','43.615390', '7.071756', 'false', 'oscar@etu.unice.fr', 'En cours', '10/05/18', '1651010102', '', null, null, null);";
     private static final String Mishap_INSERT3 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
-            "VALUES ('Problème de video projecteur', 'Informatique', 'Le video projecteur ne marche plus en salle 0+111, contactez moi par sms ou email une fois réparé si possible, merci ! Cordialement, Theresa', '37.4219983', '-122', 'true', 'theresa@unice.fr', 'En cours', '14/05/18', '0651010101', 'O+111', null, null, null);";
+            "VALUES ('Problème de video projecteur', 'Informatique', 'Le video projecteur ne marche plus en salle 0+111, contactez moi par sms ou email une fois réparé si possible, merci ! Cordialement, Theresa', '43.615886', '7.072303', 'false', 'theresa@unice.fr', 'En cours', '14/05/18', '0651010101', 'O+111', null, null, null);";
+    private static final String Mishap_INSERT4 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
+            "VALUES ('Fuite toilettes', 'Plomberie', 'Il y a une fuite dans les toilettes des hommes du bâtiment sud, je ne sais pas doù elle provient', '43.615497', '7.072829', 'true', 'oscar@etu.unice.fr', 'En cours', '14/05/18', '0651010101', 'Bâtiment sud, toilettes', null, null, null);";
+    private static final String Mishap_INSERT5 = "INSERT INTO Mishap(titleMishap, category, description, latitude, longitude, urgency, email, state, dateMishap, phone, place, image1, image2, image3)" +
+            "VALUES ('Coupure de courant à répétition', 'Eléctrique', 'Lelectricité ce coupe à interval régulier dans le grand amphithéatre', '43.615239', '7.071119', 'true', 'theresa@unice.fr', 'En cours', '14/05/18', '0651010101', 'Amphi ouest', null, null, null);";
 
     private static final String PHOTO_TABLE_NAME = "photos";
     private static final String PHOTO_ID = "idPhoto";
@@ -85,6 +89,8 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(Mishap_INSERT);
         db.execSQL(Mishap_INSERT2);
         db.execSQL(Mishap_INSERT3);
+        db.execSQL(Mishap_INSERT4);
+        db.execSQL(Mishap_INSERT5);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class ConnectionFragment extends Fragment implements View.OnClickListener
         EditText editMDP = rootView.findViewById(R.id.editMDP);
         String MDP = editMDP.getText().toString();
 
-        if (ID.equals("id") && MDP.equals("mdp")) {
+        if (MDP.equals("mdp") && (ID.equals("oscar@etu.unice.fr") || ID.equals("philippe@etu.unice.fr") || ID.equals("theresa@etu.unice.fr"))) {
             Intent intent = new Intent(getContext(), ViewAndAddActivity.class);
             intent.putExtra("email", ID);
             startActivityForResult(intent, 0);

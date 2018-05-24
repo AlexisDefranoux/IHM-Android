@@ -51,6 +51,11 @@ public class NewsCustomAdapter extends ArrayAdapter<Mishap> {
         TextView cat = convertView.findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
 
+        if (mishap.getUrgency()) {
+            TextView emergency = convertView.findViewById(R.id.emergency);
+            emergency.setText(R.string.urgency_true);
+        }
+
         convertView.findViewById(R.id.tablelayout).setTag(position);
 
         byte[] image1 = mishap.getImage1(), image2 = mishap.getImage2(), image3 = mishap.getImage3();

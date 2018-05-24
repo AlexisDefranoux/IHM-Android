@@ -35,13 +35,6 @@
                     android:layout_height="72dp"
                     app:srcCompat="?android:attr/actionModeCopyDrawable" />
 
-                <ImageView
-                    android:id="@+id/play"
-                    android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@android:drawable/ic_media_play" />
-
             </RelativeLayout>
 
             <LinearLayout
@@ -66,6 +59,12 @@
                     android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/emergency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff000d" />
 
             </LinearLayout>
 

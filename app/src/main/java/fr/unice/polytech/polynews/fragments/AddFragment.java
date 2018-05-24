@@ -40,6 +40,7 @@ import com.google.android.gms.location.LocationServices;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fr.unice.polytech.polynews.Database;
@@ -248,7 +249,7 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
         int newWidth = 0, newHeight = 0;
         int width = bm.getWidth();
         int height = bm.getHeight();
-        if (width < value && height < value) return bm;
+        //if (width < value && height < value) return bm;
         if (width > height) newWidth = value;
         else newHeight = value;
 
@@ -306,9 +307,11 @@ public class AddFragment extends Fragment implements View.OnClickListener, Googl
             image3 = imageViewToByte(imageView);
         }
 
+        String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
         Database database = new Database(getContext());
         Mishap mishap = new Mishap(0, title, category, description, lati, longi, urgency,
-                email, "Non traité", new Date().toString(), phone, place, image1, image2, image3);
+                email, "Non traité", date, phone, place, image1, image2, image3);
 
         long res = database.addMishap(mishap);
         if (res != -1) {

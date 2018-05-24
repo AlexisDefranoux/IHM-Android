@@ -2,7 +2,6 @@ package fr.unice.polytech.polynews.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,21 +28,22 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Mishap mishap = new Database(getApplicationContext()).getMishap(position+1);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-        Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.placeholder);
-        imageView.setImageBitmap(bitmap);
-
+        ImageView imageView = findViewById(R.id.imageView1);
         byte[] image1 = mishap.getImage1(), image2 = mishap.getImage2(), image3 = mishap.getImage3();
         if (image1 != null) {
+            imageView.setPadding(0, 10, 0, 0);
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(image1, 0, image1.length));
-            imageView = (ImageView) findViewById(R.id.imageView2);
+            imageView = findViewById(R.id.imageView2);
         }
         if (image2 != null) {
+            imageView.setPadding(0, 10, 0, 0);
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(image2, 0, image2.length));
-            imageView = (ImageView) findViewById(R.id.imageView3);
+            imageView = findViewById(R.id.imageView3);
         }
-        if (image3 != null)
+        if (image3 != null) {
+            imageView.setPadding(0, 10, 0, 0);
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(image3, 0, image3.length));
+        }
 
         TextView titre = findViewById(R.id.titre);
         titre.setText(mishap.getTitleMishap());
@@ -51,14 +51,12 @@ public class DetailsActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.date);
         date.setText(mishap.getDate());
 
-        TextView autor = findViewById(R.id.autor);
-        autor.setText(mishap.getEmail());
+        TextView author = findViewById(R.id.autor);
+        author.setText(mishap.getEmail());
 
         TextView ur = findViewById(R.id.urgency);
         if (mishap.getUrgency())
-            ur.setText("Urgent");
-        else
-            ur.setText("non urgent");
+            ur.setText(R.string.urgency_true);
 
         TextView cat = findViewById(R.id.cat);
         cat.setText(mishap.getCategory());
@@ -66,8 +64,13 @@ public class DetailsActivity extends AppCompatActivity {
         TextView desc = findViewById(R.id.description);
         desc.setText(mishap.getDescription());
 
+        String placeString = mishap.getPlace();
         TextView place = findViewById(R.id.place);
-        place.setText(mishap.getPlace());
+        place.setText(placeString);
+        if (placeString.equals("")) {
+            TextView Lieu = findViewById(R.id.textView9);
+            Lieu.setVisibility(View.INVISIBLE);
+        }
 
         TextView state = findViewById(R.id.state);
         state.setText(mishap.getState());
@@ -103,26 +106,27 @@ public class DetailsActivity extends AppCompatActivity {
                 Uri data = Uri.parse("mailto:" + mishap.getEmail() + "?subject=" + "[PolyIncident]"+mishap.getTitleMishap() + "&body=" + "");
                 emailIntent.setData(data);
                 startActivity(emailIntent);
-
-
             }
         });
 
-        final Button gmaps = findViewById(R.id.gmaps);
-        gmaps.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("MissingPermission")
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                intent.putExtra("latitude", mishap.getLatitude());
-                intent.putExtra("longitude", mishap.getLongitude());
-                if(mishap.getPlace() == null || mishap.getPlace().equals(""))
-                    intent.putExtra("titre", mishap.getTitleMishap());
-                else
-                    intent.putExtra("titre", mishap.getPlace());
+        Button gmaps = findViewById(R.id.gmaps);
+        if (mishap.getLatitude() == 0 && mishap.getLongitude() == 0)
+            gmaps.setVisibility(View.INVISIBLE);
+        else {
+            gmaps.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("MissingPermission")
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                    intent.putExtra("latitude", mishap.getLatitude());
+                    intent.putExtra("longitude", mishap.getLongitude());
+                    if (mishap.getPlace() == null || mishap.getPlace().equals(""))
+                        intent.putExtra("titre", mishap.getTitleMishap());
+                    else
+                        intent.putExtra("titre", mishap.getPlace());
 
-                startActivityForResult(intent, 0);
-            }
-        });
-
+                    startActivityForResult(intent, 0);
+                }
+            });
+        }
     }
 }

@@ -103,18 +103,12 @@
                     tools:layout_editor_absoluteY="2dp" />
 
                 <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="Urgence :"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <TextView
                     android:id="@+id/urgency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout_editor_absoluteX="192dp"
-                    tools:layout_editor_absoluteY="2dp" />
+                    tools:layout_editor_absoluteY="2dp"
+                    android:textColor="#ff000d"/>
 
             </LinearLayout>
 
@@ -214,8 +208,7 @@
                 <ImageView
                     android:id="@+id/imageView1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="?android:attr/actionModeCopyDrawable" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

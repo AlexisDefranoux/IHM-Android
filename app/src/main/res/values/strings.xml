@@ -24,6 +24,6 @@
     <string name="add_category">Catégorie : </string>
     <string name="add_location_checkbox">Me géolocaliser ? </string>
     <string name="add_location_now">lat %1$.4f et long %2$.4f</string>
-    <string name="addMany">ajouter à la suite</string>
+    <string name="addMany">Ajouter un autre incident</string>
     <string name="urgency_true">Urgent</string>
 </resources>

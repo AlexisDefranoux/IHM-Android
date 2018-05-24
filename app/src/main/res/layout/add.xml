@@ -104,7 +104,7 @@
 
             <CheckBox
                 android:id="@+id/addLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="invisible" />
 
@@ -177,7 +177,7 @@
             <Button
                 android:id="@+id/buttonAdd"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
@@ -189,21 +189,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/addMany"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/textMandatory"
-                android:layout_width="189dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:textAlignment="textEnd"
                 android:textColor="#8f0404"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
-
-            <CheckBox
-                android:id="@+id/addMany"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

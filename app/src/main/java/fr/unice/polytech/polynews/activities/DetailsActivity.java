@@ -99,11 +99,8 @@ public class DetailsActivity extends AppCompatActivity {
         Button mailButton = findViewById(R.id.mailButton);
         mailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                /*Intent emailIntent = new Intent(Intent.ACTION_MAIN);
-                emailIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                startActivity(emailIntent);*/
                 Intent emailIntent = new Intent(Intent.ACTION_VIEW);
-                Uri data = Uri.parse("mailto:" + "robertflorent11@gmail.com" + "?subject=" + "Error" + "&body=" + "An error");
+                Uri data = Uri.parse("mailto:" + mishap.getEmail() + "?subject=" + "" + "&body=" + "");
                 emailIntent.setData(data);
                 startActivity(emailIntent);
 

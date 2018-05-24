@@ -2,6 +2,7 @@ package fr.unice.polytech.polynews.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -61,7 +64,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(sydney, 10);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(sydney, 16);
         mMap.animateCamera(cameraUpdate);
+
+        Circle circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(-33.87365, 151.20689))
+                .radius(1000000)
+                .strokeColor(Color.RED)
+                .fillColor(Color.BLUE));
+
     }
 }
